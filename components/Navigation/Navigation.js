@@ -6,7 +6,8 @@ import Settings from '../Dashboard/Settings';
 import StartDeliveries from '../Dashboard/StartDeliveries';
 import ManagePayments from '../Dashboard/ManagePayments';
 import DrawerContainer from '../Navigation/DrawContainer';
-import GMap from '../Dashboard/Map'
+import GMap from '../Dashboard/Map';
+import CustomerDetails from '../Dashboard/CustomerDetails';
 
 import { Icon, Button, Container, Header, Content, Left, Right } from 'native-base';
 import { StackNavigator, DrawerNavigator, DrawerItems, SwitchNavigator, TabNavigator, SafeAreaView  } from 'react-navigation';
@@ -55,6 +56,9 @@ export const SignedIn = DrawerNavigator(
       GMap:{
         screen: GMap
       },
+      CustomerDetails:{
+        screen: CustomerDetails,
+      }
     },
 
     {

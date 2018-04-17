@@ -23,15 +23,15 @@ export default class StartDeliveries extends React.Component {
         <CustomHeader title="Start Deliveries" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
 
         <Content
-          contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}>  
+          contentContainerStyle={{ flex: 1,}}>  
 
-      <Button
-        buttonStyle={{ marginTop: 20 }}
-        backgroundColor="#03A9F4"
-        title="Go To Home"
-        onPress={() => this.props.navigation.navigate('Home')} full>
-      <Text style={{ color: 'white' }}>Go To home Screen</Text>
-      </Button>
+     
+
+
+
+
+
+     
                 </Content>
 </Container>
 
@@ -42,6 +42,6 @@ export default class StartDeliveries extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#487eb0',
+    backgroundColor: '#f6f6f6',
   },
 })

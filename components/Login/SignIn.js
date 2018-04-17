@@ -49,7 +49,7 @@ export default ({ navigation }) => (
         );
 
         
-const styles = StyleSheet.create({
+const styles= StyleSheet.create({
   container: {
     flex: 1, 
     alignItems: 'center',
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
       borderRadius: 25,
       color: '#ffffff',
       paddingHorizontal: 16,
-      marginVertical: 200,
+      marginVertical: 10,
   },
   logo:{
     width: 100,

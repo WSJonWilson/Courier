@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { ScrollView, Text, Linking, View, StyleSheet, Image, Dimensions } from "react-native";
 import { Button, Card, CardItem, Container, Header, Icon, Content, Left, Right } from 'native-base';
 import CustomHeader from './CustomHeader';
+import NoteList from '../Dashboard/NoteList';
+import ChatList from '../Dashboard/ChatList';
 
 
 class Home extends Component {
@@ -26,79 +28,60 @@ class Home extends Component {
           contentContainerStyle={{ flex: 1}}>
   {/* *********** COUNTER HEADER ***********/}
 
-        <View style={styles.viewContainer}>
-          <View style={styles.boxContainer}> 
-              <Text style={styles.text}> No. of packages </Text>
-              <View>
-
-              </View>
-
-              <View style={styles.line}>
-              <Text style={styles.counter}> 20 </Text>
-              <Text style={styles.text}> Remaining </Text>
-              </View>
-
-        </View>
-          <View style={styles.boxContainer}> 
-
-              <Text style={styles.text}> No. of Customers </Text>
-              <View style={styles.line}>
-              <Text style={styles.counter}> 32 </Text>
-              <Text style={styles.text}> Remaining </Text>
-
-              </View>
-
-        </View>
-
-          <View style={styles.boxContainer}> 
-              <Text style={styles.text}> Cash Collected </Text>
-              <View style={styles.line}>
-              <Text style={styles.counter}> $0.00 </Text>
-
-              </View>
-
-        </View>
+   <View style={styles.viewContainer}>
         
-        </View>
+      <Card style={styles.cardContainer}>
+              <View style={styles.boxContainer}> 
+              <Text style={styles.counter}> 0 </Text>
+              <Text style={styles.text}>Packages Left</Text>
+             </View>
 
+              <View style={styles.boxContainer}> 
+              <Text style={styles.counter}> 0 </Text>
+              <Text style={styles.text}>Customers Left</Text>
+             </View>
+
+              <View style={styles.boxContainer}> 
+              <Text style={styles.counter}> $0.00 </Text>
+              <Text style={styles.text}> Cash Collected </Text>   
+              </View>
+       </Card> 
+  </View>  
   {/* *********** NOTES ***********/}
-
+        <Card style={styles.notesContainer}>
         <View>
-          <Text style={styles.heading}>Notes</Text>
-          </View>
-        <Card style={styles.cardContainer}>
+        <Text style={styles.heading}>Notes</Text>
+        </View>
+        <View style={styles.line}>
+        </View>
         <ScrollView>
-        <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
+        <NoteList />
           </ScrollView>
+
+          <Button        
+            style={styles.Button}
+            onPress={() => this.props.navigation.navigate('Map')} full>
+            <Text>New Note</Text>
+          </Button>
+
         </Card>
 
+        <Card style={styles.chatContainer}>
         <View>
-          <Text style={styles.heading}>Chat</Text>
-          </View>
-
-        <Card>
+        <Text style={styles.heading}>Chat</Text>
+        </View>
+        <View style={styles.line}>
+        </View>
           <ScrollView>
-          <Text>Chat</Text>
-          <Text>Chat</Text>
-          <Text>Chat</Text>
-          <Text>Chat</Text>
-          <Text>Chat</Text>
-          <Text>Chat</Text>
-          <Text>Chat</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-
+          <ChatList />
             </ScrollView>
+
+            <Button
+            style={styles.Button}
+            onPress={() => this.props.navigation.navigate('Map')} full
+            >
+            <Text>New Message</Text>
+          </Button>
         </Card>
           
 
@@ -112,58 +95,89 @@ class Home extends Component {
 
 export default Home;
 
-
   const styles = StyleSheet.create({
   container:{
-    backgroundColor: '#487eb0',
+    backgroundColor: '#f6f6f6',
     flex: 1,
   },
   viewContainer:{
       flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
-  },   
+  },  
+
   icon: {
     width: 24,
     height: 24,
   },
+
   boxContainer:{
-   // margin: 2.2,
-    width: Dimensions.get('window').width /3, //-5,
-    height: 120,
+    width: Dimensions.get('window').width /3 -5, //Review Dimensions Component
+    margin: 3,
     alignItems: 'center',
-    backgroundColor: '#fafafa',
-    borderRadius: 10,
-    borderColor: '#3867d6',
-    borderWidth: 1,
-  },
+    },
+
   cardContainer:{
-    backgroundColor: '#fafafa'
+    backgroundColor: '#fafafa',
+    flex: 1,
+    flexDirection: 'row',
+    height: 130,
+    paddingTop: 10, 
+    marginTop: 10,
+
   },
+
     text:{
       color: '#0984e3',
-      fontSize: 12,
+      fontSize: 14,
       paddingTop: 10,
       paddingBottom: 10,
       alignItems: 'center'
     },
+
     counter:{
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center',
-      fontSize: 24,
+      fontSize: 26,
     },
-    line: {
-      borderBottomColor: '#d1d8e0',
-      borderBottomWidth: 1,
-    },
+
+  line:{
+    borderBottomWidth: 2,
+    borderColor: '#0000',
+    marginBottom: 5,
+   },
 
     heading:{
-      fontSize: 18,
+      fontSize: 20,
       fontWeight: '300',
-      color: '#fff',
+      color: '#0984e3',
       textAlign: 'center',
 
+    },
+    notesContainer:{
+      backgroundColor: '#fefefe',
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 10,
+      paddingRight: 10,
+      marginTop: -90
+    },
+    chatContainer:{
+      backgroundColor: '#fefefe',
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 10,
+      paddingRight: 10,
+      marginTop: 13
+   
+    },
+    Button:{
+      marginTop: 5,
+      marginLeft: 15,
+      marginRight: 15,
+      color: '#ffff',
+      backgroundColor: '#1e90ff',
     }
 
 });

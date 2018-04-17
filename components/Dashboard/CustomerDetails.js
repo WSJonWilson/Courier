@@ -8,7 +8,7 @@ import CustomHeader from './CustomHeader';
 
 
 
-export default class GMap extends React.Component {
+export default class CustomerDetails extends React.Component {
 
   render() {
 
@@ -17,11 +17,11 @@ export default class GMap extends React.Component {
     return (
 
 <Container style={styles.container}>
-        <CustomHeader title="Map" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
+        <CustomHeader title="Customer Details" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
         <SearchBar
   placeholder='Type Here...' />
         <Content
-          contentContainerStyle={{ flex: 1, padding: 10 }}>   
+          style={styles.contentContainer}>   
 
         <View style={styles.mapContainer}>
         <MapView
@@ -35,6 +35,23 @@ export default class GMap extends React.Component {
           }}
         ></MapView>
           </View>
+<View style={styles.cardContainer}>
+     <Card>
+     <ScrollView>
+        <Text>Notes</Text>
+          <Text>Notes</Text>
+          <Text>Notes</Text>
+          <Text>Notes</Text>
+          <Text>Notes</Text>
+          <Text>Notes</Text>
+          <Text>Notes</Text>
+          <Text>Notes</Text>
+          <Text>Notes</Text>
+          <Text>Notes</Text>
+          {/*Will Replace with Details Component. Name of this parent component will change. */}
+      </ScrollView>   
+     </Card>
+</View> 
 
                 </Content>
 </Container>
@@ -59,8 +76,17 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     ...StyleSheet.absoluteFillObject,
-    flex: 1,
-
+    height: 350,
+    width: 450,
+    justifyContent: 'center',
+    alignItems: 'center',
 },
-
-})
+cardContainer:{
+  backgroundColor: '#fafafa',
+},
+contentContainer:{
+    flex: 1, 
+    padding: 10
+    }
+}
+)

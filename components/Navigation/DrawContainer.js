@@ -78,6 +78,16 @@ export default class DrawerContainer extends React.Component {
         Find Route
       </Text>
       </View>
+
+      <View style={styles.menuItem}>
+<Icon name="place" 
+                size={20}
+                style={styles.icon}/>
+      <Text
+        onPress={() => navigation.navigate('CustomerDetails')}
+        style={styles.drawerItem}>
+Customer Details      </Text>
+      </View>
       
       <View style={styles.line}>
       </View>
