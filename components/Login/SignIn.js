@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  AsyncStorage,
   TouchableOpacity,
   Image,
   Platform,
@@ -11,13 +12,16 @@ import {
   KeyboardAvoidingView,
   TextInput
 } from 'react-native';
-
+import LinearGradient from 'react-native-linear-gradient';
 import { Card, FormLabel, FormInput} from 'react-native-elements';
 import { CardItem, Container, Header, Icon, Content, Left, Right } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 import {onSignIn, isSignedIn} from './Auth';
- 
+
+
+
 export default ({ navigation }) => (
+
 
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -55,7 +59,7 @@ const styles= StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
       paddingVertical: 20,
-      backgroundColor: '#487eb0'
+      backgroundColor: '#3867d6'
   },
   input: {
       width: 300,
@@ -90,7 +94,7 @@ const styles= StyleSheet.create({
   logoText:{
     marginVertical: 15,
     fontSize: 18,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: '#ffff',
   },
   forgotPassword:{
 

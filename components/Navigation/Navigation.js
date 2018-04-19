@@ -2,15 +2,22 @@ import React, { Component } from 'react';
 import { Platform, StatusBar, StyleSheet } from "react-native";
 import SignIn from '../Login/SignIn';
 import Home from '../Dashboard/Home';
+import Note from '../Dashboard/Note';
+import Chat from '../Dashboard/Chat';
 import Settings from '../Dashboard/Settings';
 import StartDeliveries from '../Dashboard/StartDeliveries';
 import ManagePayments from '../Dashboard/ManagePayments';
 import DrawerContainer from '../Navigation/DrawContainer';
 import GMap from '../Dashboard/Map';
 import CustomerDetails from '../Dashboard/CustomerDetails';
+import DeliveryComplete from '../Dashboard/DeliveryComplete';
+import DeliveryDefault from '../Dashboard/DeliveryDefault';
+import DeliveryHold from '../Dashboard/DeliveryHold';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Icon, Button, Container, Header, Content, Left, Right } from 'native-base';
-import { StackNavigator, DrawerNavigator, DrawerItems, SwitchNavigator, TabNavigator, SafeAreaView  } from 'react-navigation';
+
+import { Button, Container, Header, Content, Left, Right } from 'native-base';
+import { StackNavigator, DrawerNavigator, DrawerItems, SwitchNavigator, TabNavigator, TabBarBottom, SafeAreaView  } from 'react-navigation';
 
 
 export const SignedOut = StackNavigator({
@@ -20,6 +27,12 @@ export const SignedOut = StackNavigator({
     Home: { 
       screen: Home 
     },
+    Chat: {
+      screen: Chat
+    },
+    Note:{
+      screen: Note
+    }
   },
 
   {
@@ -29,14 +42,6 @@ export const SignedOut = StackNavigator({
 
 
 
- /*  export const Settings = StackNavigator({
-
-
-******** Settings List *********
- 
-
-  })
-*/ 
 export const SignedIn = DrawerNavigator(
     {
       Home: {
@@ -61,7 +66,7 @@ export const SignedIn = DrawerNavigator(
       }
     },
 
-    {
+  {
       initialRouteName: 'Home',
     drawerPosition: 'left',
     contentComponent: DrawerContainer,
@@ -69,34 +74,26 @@ export const SignedIn = DrawerNavigator(
     drawerCloseRoute: 'DrawerClose',
     drawerToggleRoute: 'DrawerToggle',
     gesturesEnabled: false,
-    headerStyle: {backgroundColor: '#45aaf2'},
-
-    
  });
  
-/*
- const DrawerNavigation = StackNavigator({
-  SignedIn: { screen: SignedIn }
-}, {
-  headerMode: 'float',
-  navigationOptions: ({navigation}) => ({
-    //headerStyle: {backgroundColor: 'green'},
-    
-    title: 'Logged In to your app!',
-    gesturesEnabled: false,
-    headerLeft: <Text onPress={() => {
-      
-      
-      if (navigation.state.index === 0) {
-        navigation.navigate('DrawerOpen')
-      } else {
-        navigation.navigate('DrawerClose')
-      }
-    }}>Menu</Text>
-  })
-})
+ 
+ 
+ export const TabNavigation = TabNavigator ({
 
-*/
+  DeliveryDefault:{
+     screen: DeliveryDefault
+   },
+   DeliveryHold:{ 
+     screen: DeliveryHold,
+   },
+   DeliveryComplete:{
+     screen: DeliveryComplete,
+   },
+  },
+  
+);
+ 
+
 
 
 export const createRootNavigator = (signedIn = false) => {

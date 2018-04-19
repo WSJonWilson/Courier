@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { ScrollView, Text, Linking, View, StyleSheet, Image, Dimensions } from "react-native";
 import { Button, Card, CardItem, Container, Header, Icon, Content, Left, Right } from 'native-base';
+import LinearGradient from 'react-native-linear-gradient';
 import CustomHeader from './CustomHeader';
 import NoteList from '../Dashboard/NoteList';
 import ChatList from '../Dashboard/ChatList';
+import Chat from '../Dashboard/Chat';
+import Note from '../Dashboard/Note';
 
 
 class Home extends Component {
@@ -22,10 +25,13 @@ class Home extends Component {
   render() {
     return (
 
-      <Container style={styles.container}>
+      <LinearGradient 
+      colors={['#fefefe', '#dddd']} 
+      style={styles.container}>
         <CustomHeader title="Home" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
         <Content
           contentContainerStyle={{ flex: 1}}>
+          
   {/* *********** COUNTER HEADER ***********/}
 
    <View style={styles.viewContainer}>
@@ -60,7 +66,7 @@ class Home extends Component {
 
           <Button        
             style={styles.Button}
-            onPress={() => this.props.navigation.navigate('Map')} full>
+            onPress={() => this.props.navigation.navigate('Note')} full>
             <Text>New Note</Text>
           </Button>
 
@@ -78,7 +84,7 @@ class Home extends Component {
 
             <Button
             style={styles.Button}
-            onPress={() => this.props.navigation.navigate('Map')} full
+            onPress={() => this.props.navigation.navigate('Chat')} full
             >
             <Text>New Message</Text>
           </Button>
@@ -86,7 +92,7 @@ class Home extends Component {
           
 
         </Content>
-      </Container>
+      </LinearGradient>
 
     )
   }
@@ -97,7 +103,6 @@ export default Home;
 
   const styles = StyleSheet.create({
   container:{
-    backgroundColor: '#f6f6f6',
     flex: 1,
   },
   viewContainer:{
@@ -122,8 +127,8 @@ export default Home;
     flex: 1,
     flexDirection: 'row',
     height: 130,
-    paddingTop: 10, 
-    marginTop: 10,
+    paddingTop: 22, 
+    marginTop: 0,
 
   },
 
@@ -161,7 +166,8 @@ export default Home;
       paddingBottom: 10,
       paddingLeft: 10,
       paddingRight: 10,
-      marginTop: -90
+      elevation: 0,
+
     },
     chatContainer:{
       backgroundColor: '#fefefe',
@@ -169,15 +175,17 @@ export default Home;
       paddingBottom: 10,
       paddingLeft: 10,
       paddingRight: 10,
-      marginTop: 13
-   
+      marginTop: 13,
+      elevation: 0,
+
     },
     Button:{
       marginTop: 5,
-      marginLeft: 15,
-      marginRight: 15,
-      color: '#ffff',
-      backgroundColor: '#1e90ff',
+      marginLeft: 40,
+      marginRight: 40,
+      color: '#0984e3',
+      backgroundColor: '#fff',
+      borderRadius: 50,
     }
 
 });

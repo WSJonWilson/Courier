@@ -3,9 +3,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { Button, Card, CardItem, Container, Header, Content, Left, Right } from 'native-base';
 import { NavigationActions } from 'react-navigation';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-
 
 
 export default class DrawerContainer extends React.Component {
@@ -16,13 +15,13 @@ export default class DrawerContainer extends React.Component {
 
       <View>
 {/* Drawer Header */}
-      <Header style={styles.drawerHeader}>
-        <View>
+      <LinearGradient 
+            colors={['#3867d6', '#0abde3']}
+            style={styles.drawerHeader}>
             <Image source={require('../../assets/images/avatar.png')}
             style ={styles.drawerImage}/>
             <Text style={styles.accountName}>Jon D. Wilson</Text>
-          </View>
-      </Header>
+          </LinearGradient>
 
 {/* Drawer Body */}
 
@@ -129,16 +128,10 @@ const styles = StyleSheet.create({
       color: '#fff',
       textAlign: 'center'
   },
-  container: {
-    flex: 1,
-    backgroundColor: '#f6f6f6',
-    paddingTop: 40,
-    paddingHorizontal: 20,
-    textAlign: 'center',
-  },
+
   drawerItem: {
-    fontSize: 16,
-    //fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: "300",
     color: '#0984e3',
     paddingTop: 15,
     paddingBottom: 15,
@@ -148,7 +141,9 @@ const styles = StyleSheet.create({
   },
   drawerHeader: {
     height: 200,
-    backgroundColor: '#3867d6'
+    alignItems: 'center',
+
+
   },
   drawerImage: {
     width: 100,
@@ -162,8 +157,8 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   line: {
-    borderBottomColor: '#d1d8e0',
-    borderBottomWidth: 1,
+    borderBottomColor: '#fafafa',
+    borderBottomWidth: 3,
   },
   menuItem:{
     flexDirection: 'row',

@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react';
 import {AppRegistry, Platform, StyleSheet, Text, View } from 'react-native';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator, TabBarTop, TabNavigator } from 'react-navigation';
 
 
 import {isSignedIn} from './components/Login/Auth';

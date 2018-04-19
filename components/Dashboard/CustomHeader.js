@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 class CustomHeader extends Component {
     render() {
         return (
-            <Header style={{backgroundColor: '#3867d6', textAlign: 'left'}}
+            <Header style={{ backgroundColor: '#129fcb', textAlign: 'left'}}
                     placement="left">
                 <Left>
                     <Icon name="menu" size={28}onPress={() => this.props.drawerOpen()} />
