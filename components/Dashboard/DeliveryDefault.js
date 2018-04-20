@@ -1,79 +1,64 @@
-import React from 'react'
-import { StyleSheet, ScrollView, Text, View, Image } from 'react-native'
-import {Card, FormLabel, FormInput} from 'react-native-elements';
-import { SearchBar } from 'react-native-elements'
-import { Icon, Button, Container, Header, Content, Left, Right } from 'native-base';
-import CustomHeader from './CustomHeader';
+import React, { Component } from 'react';
+import { Card, FlatList, FlatListProperties, ActivityIndicator,TouchableOpacity, View, Text, Alert} from 'react-native';
 
 
-export default class DeliveryDefault extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        const { params = {} } = navigation.state;
-       let tabBarLabel = 'Default';
-       return {tabBarLabel};
-      }
+export default class DeliveryDefault extends Component {
+  
 
-  render() {
-    return (
-
-<Container style={styles.container}>
-        <Content
-          contentContainerStyle={{ flex: 1,}}>
-                  <CustomHeader title="Start Deliveries" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
-                  <SearchBar
-  placeholder='Type Here...' />
-  <ScrollView>
-                  <Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-<Card>
-<Text>Tab 1</Text>
-</Card>
-</ScrollView>
-                </Content>
-</Container>
-
-    )
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true}
   }
+
+
+  componentDidMount(){
+
+  return fetch('http://websource.shipwebsource.com/logiksys/courier-app-services/get-route-packages.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+})
+
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      this.setState({
+        isLoading: false,
+        dataSource: responseJson.package,
+      }, function(){
+
+      });
+   })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+  
+
+  render(){
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
+
+  return(
+   <View style={{flex: 1, paddingTop:20}}>
+        <FlatList
+          data={this.state.dataSource}
+          renderItem={({item}) => 
+          <Text>
+          {item.PackageNumber}, 
+          {item.InternationalTrackingNumber}
+          </Text>}
+          keyExtractor={(item, index) => index}
+        />
+      </View>
+  );
 }
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f6f6f6',
-  },
-})
+//https://codeburst.io/integrating-react-native-apps-with-back-end-code-using-fetch-api-8aeb83dfb428
+}
