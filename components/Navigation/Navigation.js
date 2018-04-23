@@ -10,9 +10,11 @@ import ManagePayments from '../Dashboard/ManagePayments';
 import DrawerContainer from '../Navigation/DrawContainer';
 import GMap from '../Dashboard/Map';
 import CustomerDetails from '../Dashboard/CustomerDetails';
+import DeliveryDetails from '../Dashboard/DeliveryDetails';
 import DeliveryComplete from '../Dashboard/DeliveryComplete';
 import DeliveryDefault from '../Dashboard/DeliveryDefault';
 import DeliveryHold from '../Dashboard/DeliveryHold';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
@@ -32,6 +34,9 @@ export const SignedOut = StackNavigator({
     },
     Note:{
       screen: Note
+    },
+    DeliveryDetails:{
+      screen: DeliveryDetails
     }
   },
 

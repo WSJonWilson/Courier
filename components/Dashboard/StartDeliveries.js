@@ -16,7 +16,7 @@ class StartDeliveries extends React.Component {
 
 <Container style={styles.container}>
 <Header>
-        <CustomHeader title="Start Deliveries" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
+        <CustomHeader style={styles.CustomHeader} title="Start Deliveries" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
 </Header>
 <DeliveryDefault />
 <DeliveryComplete/>
@@ -56,13 +56,13 @@ const TabNavigation = TabNavigator ({
       },
       style: {
         height: 60,
-        backgroundColor: '#129fcb'
+        backgroundColor: '#129fcb',
       },
     },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: false,
+    animationEnabled: true,
+    swipeEnabled: true,
   }
 );
 
@@ -73,5 +73,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f6f6f6',
-  },
+  }
 })

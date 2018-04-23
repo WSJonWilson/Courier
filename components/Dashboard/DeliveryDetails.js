@@ -1,12 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { Modal, StyleSheet, Text, View, Image } from 'react-native'
 import {Card, FormLabel, FormInput} from 'react-native-elements';
 import { Icon, Button, Container, Header, Content, Left, Right } from 'native-base';
 import CustomHeader from './CustomHeader';
-import { TabNavigator } from 'react-navigation';
 
 
-export default class DeliveryHold extends React.Component {
+export default class DeliveryDetails extends React.Component {
 
   render() {
     return (

@@ -15,8 +15,6 @@ export default class DeliveryComplete extends React.Component {
 
         <Content
           contentContainerStyle={{ flex: 1,}}>  
-                  <CustomHeader title="Start Deliveries" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
-
 <Card>
 <Text>Tab 3</Text>
 </Card>
