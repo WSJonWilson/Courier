@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Card, FlatList, FlatListProperties, ActivityIndicator, Modal, TouchableOpacity, TouchableHighlight, StyleSheet,  View, Text, TextInput, Alert} from 'react-native';
+import { Card, FlatList, FlatListProperties, ActivityIndicator, TouchableOpacity, TouchableHighlight, StyleSheet,  View, Text, TextInput, Alert} from 'react-native';
 import { List, ListItem } from "react-native-elements";
+import Modal from 'react-native-modal';
 import { Icon, Button, Container, Header, Content, Left, Right } from 'native-base';
 import { SearchBar } from 'react-native-elements';
 import CustomHeader from './CustomHeader';
@@ -16,12 +17,14 @@ export default class DeliveryDefault extends Component {
 
   //Modal 
   state = {
-    modalVisible: false,
-  };
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
+    isModalVisible: false
+    };
 
+    _onPressItem = (item) => { 
+      this._showModal(item);
+  };
+
+  _showModal = (selectedItem) => this.setState({ isModalVisible: true, selectedItem });
 
   renderSeparator = () => {
     return (
@@ -68,16 +71,14 @@ export default class DeliveryDefault extends Component {
         'Content-Type': 'application/json',
       },
 })
-
     .then((response) => response.json())
     .then((responseJson) => {
-
+      
       this.setState({
         isLoading: false,
         dataSource: responseJson.customer,
        
       }, function(){
-
       });
    })
     .catch((error) => {
@@ -85,6 +86,9 @@ export default class DeliveryDefault extends Component {
     });
 }
   
+
+_toggleModal = () =>
+this.setState({ isModalVisible: !this.state.isModalVisible });
 
   render(){
     if(this.state.isLoading){
@@ -97,23 +101,24 @@ export default class DeliveryDefault extends Component {
 
   return(
 <Container>
-<Modal
-          animationType="fade"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            alert('Closed customer details..');
-          }}>
-          <View style={{marginTop: 22, backgroundColor: '#f6f6f6'}}>
-            <View>
+<Modal isVisible={this.state.isModalVisible}
+       animationType={"slide"}
+       onSwipe={() => this.setState({ isVisible: false })}
+       swipeDirection="left">
+          <View style={styles.modal}>
+            <View style={styles.ModalInsideView}>
+            <Text>Additional Details for (FirstName, LastName)</Text>
+            <Text>Address: (Address)</Text>
+            <Text>Contact: (555-5555)</Text>
+            <Text>Total Cost: (Total Cost)</Text>
+            <Button title="Get Route"/>
+            <Button title="View Packages"/>
 
-              <TouchableOpacity
-                style={styles.Button}
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Hide</Text>
-              </TouchableOpacity>
+            <TouchableOpacity 
+                    onPress= {this._toggleModal}
+                    style={styles.ModalButton}>
+              <Text style={styles.text}> Close Modal </Text>
+            </TouchableOpacity>
             </View>
           </View>
         </Modal>
@@ -128,18 +133,19 @@ export default class DeliveryDefault extends Component {
           renderItem={({item}) => 
           
           <TouchableOpacity
-            onPress={() => {
-              this.setModalVisible(true);
-            }}>
+          onPress={this._toggleModal}>
           
           <ListItem
-          title={       
+          title={     
+          <View>     
           <Text style={styles.title}>
-                {`${item.Title} ${item.FirstName} ${item.LastName}`} <Text style={{fontSize: 14, color: '#0984e3', fontWeight: '400'}}>, 0 Packages</Text>
+                {`${item.Title} ${item.FirstName} ${item.LastName}`} - #{`${item.AccountNumber}`}
           </Text>
+         </View>
           }
             subtitle={
             <View style={styles.subtitle}>
+             <Text>{`${item.Tel1}`}</Text><Text style={{fontSize: 14, color: '#0984e3', fontWeight: '400'}}>0 Packages</Text>
             <Text>
             {`${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryCity}`}
             </Text>
@@ -147,9 +153,12 @@ export default class DeliveryDefault extends Component {
           }
           
           />
+              
           </TouchableOpacity>
+             
       }/>
       </List>
+  
 </Container>
   );
 }
@@ -159,10 +168,7 @@ export default class DeliveryDefault extends Component {
 
 
 const styles = StyleSheet.create({
-  CustomHeader:{
-    position: 'absolute',
-    
-  },
+
   Button:{
     marginTop: 5,
     marginLeft: 100,
@@ -186,5 +192,42 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 17,
 
-  }
+  },
+  Modal:{
+    flex:1, 
+    justifyContent: 'center',
+     alignItems: 'center'
+
+      
+   },
+   ModalButton:{
+      backgroundColor: '#0984e3',
+      color: '#fff',
+      marginLeft: 75,
+    marginRight: 75,
+    borderRadius: 10,
+
+   },
+   ModalInsideView:{
+ 
+    justifyContent: 'center',
+    alignItems: 'center', 
+    backgroundColor : "#fefefe", 
+    height: 400 ,
+    width: '100%',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#00BCD4'
+   
+  },
+
+   text: {
+   fontSize: 16, 
+   fontWeight: '300',
+  marginBottom: 5, 
+  color: "#fff",
+  padding: 10,
+  textAlign: 'center'
+ },
+
 })
