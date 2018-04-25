@@ -15,7 +15,11 @@ export default class DeliveryDetails extends React.Component {
         <Content
           contentContainerStyle={{ flex: 1,}}>  
 <Card>
-<Text>Tab 2</Text>
+<Text>Package Details: </Text>
+<Text>Amount of Packages: </Text>
+<Text>Total Price</Text>
+
+
 </Card>
                 </Content>
 </Container>
