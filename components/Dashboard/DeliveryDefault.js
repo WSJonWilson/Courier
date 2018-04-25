@@ -71,6 +71,7 @@ export default class DeliveryDefault extends Component {
 
   fetch('http://websource.shipwebsource.com/logiksys/courier-app-services/get-route-packages.php')
     .then(response => response.json())
+    
     .then(responseJson => {
       this.setState({
         isLoading: false,
