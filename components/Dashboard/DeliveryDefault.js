@@ -8,28 +8,71 @@ import { SearchBar } from 'react-native-elements';
 import CustomHeader from './CustomHeader';
 
 import DeliveryDetails from  './DeliveryDetails'
+import ModalDetails from './Modal';
+
 
 
 export default class DeliveryDefault extends Component {
   
 
   constructor(props){
+    
     super(props);
+    const { navigation } = this.props;
+
     this.state = { isLoading: true,
-        text: ''}
-  }
-
-  //Modal 
-  state = {
-    isModalVisible: false
-    };
-
-    _onPressItem = (item) => { 
-      this._showModal(item);
+      isModalVisible: false,
+      selectedItem: null,
+        text: ''};
   };
 
-  _showModal = (selectedItem) => this.setState({ isModalVisible: true, selectedItem });
+   onPressItem = (item) => { 
+    this.toggleModal (item);
+  };
 
+  hideMyModal = () => {
+    this.setState({isModalVisible: false})
+}
+  
+toggleModal = (item) => this.setState({ isModalVisible: true, 
+  selectedItem: item })
+  
+  _keyExtractor = (item, index) => item.id;
+
+ /* setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  } */
+
+  
+  renderItem = ({item}) => (       
+    <TouchableOpacity
+    onPress={this.toggleModal}
+    >
+
+    <ListItem
+        item={item}
+        onPressItem={() => this._onPressItem(item)}
+    title={     
+    <View>     
+    <Text style={styles.title}>
+          {`${item.Title} ${item.FirstName} ${item.LastName}`} - #{`${item.AccountNumber}`}
+    </Text>
+   </View>
+    }
+      subtitle={
+      <View style={styles.subtitle}>
+       <Text>{`${item.Tel1}`} / {`${item.Tel2}`}</Text><Text style={{fontSize: 14, color: '#0984e3', fontWeight: '400'}}>0 Packages</Text>
+      <Text>
+      {`${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`}
+      </Text>
+      </View>
+    }
+    />     
+    </TouchableOpacity>
+     
+    );
+
+    
   renderSeparator = () => {
     return (
       <View
@@ -76,7 +119,8 @@ export default class DeliveryDefault extends Component {
       this.setState({
         isLoading: false,
         dataSource: responseJson.customer 
-      }, function(){
+      },
+       function(){
       });
    })
     .catch((error) => {
@@ -84,10 +128,6 @@ export default class DeliveryDefault extends Component {
     });
     
 }
-  
-
-_toggleModal = () =>
-this.setState({ isModalVisible: !this.state.isModalVisible });
 
   render(){
     const { navigation } = this.props
@@ -103,36 +143,11 @@ this.setState({ isModalVisible: !this.state.isModalVisible });
 
   return(
 <Container>
-<Modal isVisible={this.state.isModalVisible}
-       animationType={"slide"}
-       onSwipe={() => this.setState({ isVisible: false })}
-       swipeDirection="left">
-          <View style={styles.modal}>
-            <View style={styles.ModalInsideView}>
-            <View style={{backgroundColor: '#00BCD4', paddingTop: 50, }}>
-            <TouchableOpacity 
-                onPress= {this._toggleModal}>
-                    <Icon name="close" 
-                            size={20}
-                            style={{color: 'red',
-                                    right: 5,
-                                    position: 'absolute',
-                                    top: 5, 
-                                    right: 5}}/>
-            </TouchableOpacity>
-            <Text style={{color: '#fff', fontSize: 18, fontWeight: '100',}}>Additional Details for (FirstName, LastName)</Text>
-            </View>
-            <Text>Address: (Address)</Text>
-            <Text>Contact: (555-5555)</Text>
-            <Text>Total Cost: (Total Cost)</Text>
-            <TouchableOpacity style={styles.DetailsButton}><Text style={styles.text}>Get Route</Text></TouchableOpacity>
-            <TouchableOpacity
-            onPress={() => navigation.navigate('DeliveryDetails')}   
-           style={styles.DetailsButton}>
-           <Text style={styles.text}>View Packages</Text></TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+{this.state.selectedItem && 
+<ModalDetails
+        modalVisible={this.state.isModalVisible} 
+        selectedItem={this.state.selectedItem}
+        hideModal={this.hideMyModal}         />}
 
    <List style={{flex: 1,}}>
         <FlatList
@@ -140,34 +155,9 @@ this.setState({ isModalVisible: !this.state.isModalVisible });
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
           ListFooterComponent={this.renderFooter}
+          renderItem={this.renderItem}
           keyExtractor={item => item.AccountNumber}
-          renderItem={({item}) => 
-          
-          <TouchableOpacity
-          onPress={this._toggleModal}>
-          
-          <ListItem
-          title={     
-          <View>     
-          <Text style={styles.title}>
-                {`${item.Title} ${item.FirstName} ${item.LastName}`} - #{`${item.AccountNumber}`}
-          </Text>
-         </View>
-          }
-            subtitle={
-            <View style={styles.subtitle}>
-             <Text>{`${item.Tel1}`} / {`${item.Tel2}`}</Text><Text style={{fontSize: 14, color: '#0984e3', fontWeight: '400'}}>0 Packages</Text>
-            <Text>
-            {`${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`}
-            </Text>
-            </View>
-          }
-          
-          />
-              
-          </TouchableOpacity>
-             
-      }/>
+      />
       </List>
   
 </Container>
