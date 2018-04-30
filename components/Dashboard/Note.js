@@ -79,11 +79,10 @@ export default class ChatList extends Component {
     return (
 
         
-       <View
-        style={[styles.container, { paddingBottom: this.state.viewPadding }]}
+       <Container
       >
               <CustomHeader title="Note" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
-
+<View style={[styles.container, { paddingBottom: this.state.viewPadding }]}>
         <FlatList
           style={styles.list}
           data={this.state.tasks}
@@ -108,6 +107,7 @@ export default class ChatList extends Component {
           returnKeyLabel="done"
         />
       </View>
+</Container>
 
 
     );
@@ -165,7 +165,6 @@ let Tasks = {
       paddingRight: 10,
       paddingLeft: 10,
       borderColor: "gray",
-      borderWidth: isAndroid ? 0 : 1,
       width: "100%"
     }
   });

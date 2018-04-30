@@ -49,7 +49,7 @@ export default class ModalDetails extends Component {
             <View>
             <Text style={{textAlign: 'center', fontSize: 18, paddingBottom: 20 }}>Additional Details</Text>
 
-            <Text style={{textAlign: 'center', fontSize: 18, }}>Account #: {`${this.props.selectedItem.AccountNumber}`}</Text>
+            <Text style={{textAlign: 'center', fontSize: 18, }}>Account #: {`${this.props.customer}`}</Text>
             <Text style={{textAlign: 'center', fontSize: 18, }}>Name:</Text>
             <Text style={{textAlign: 'center', fontSize: 18, }}>Address:</Text>
             <Text style={{textAlign: 'center', fontSize: 18, }}>Contact:</Text>
