@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import {AppRegistry, Platform, StyleSheet, Text, View } from 'react-native';
 import { StackNavigator, DrawerNavigator, TabBarTop, TabNavigator } from 'react-navigation';
-
+import * as firebase from 'firebase';
 
 import {isSignedIn} from './components/Login/Auth';
 import SignIn from './components/Login/SignIn';

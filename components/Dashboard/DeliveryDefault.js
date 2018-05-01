@@ -66,7 +66,7 @@ toggleModal = (item) => this.setState({ isModalVisible: true,
       {`${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`}
       </Text>
       </View>
-    }
+    }    
     />     
     </TouchableOpacity>
      
@@ -119,6 +119,21 @@ toggleModal = (item) => this.setState({ isModalVisible: true,
       this.setState({
         isLoading: false,
         dataSource: responseJson.customer 
+      },
+       function(){
+      });
+   })
+    .catch((error) => {
+      console.error(error);
+    });
+
+    fetch('http://websource.shipwebsource.com/logiksys/courier-app-services/get-route-packages.php')
+    .then(response => response.json())
+    
+    .then(responseJson => {
+      this.setState({
+        isLoading: false,
+        dataSource: responseJson.package 
       },
        function(){
       });

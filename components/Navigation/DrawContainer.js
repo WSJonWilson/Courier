@@ -13,7 +13,7 @@ export default class DrawerContainer extends React.Component {
     const { navigation } = this.props
     return (
 
-      <View>
+      <ScrollView>
 {/* Drawer Header */}
       <LinearGradient 
             colors={['#3867d6', '#0abde3']}
@@ -24,7 +24,6 @@ export default class DrawerContainer extends React.Component {
           </LinearGradient>
 
 {/* Drawer Body */}
-
     <View style={styles.menuItem}>
     <Icon name="home" 
                   size={20}  
@@ -116,7 +115,7 @@ Customer Details      </Text>
 <View style={styles.line}>
       </View>
       
-    </View>
+    </ScrollView>
     )
   }
 }

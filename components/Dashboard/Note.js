@@ -3,110 +3,153 @@ import React, { Component } from "react";
 import {
   AppRegistry,
   StyleSheet,
+  StatusBar,
   Text,
   View,
-  FlatList,
+  ListView,
   AsyncStorage,
   TextInput,
+  TouchableOpacity,
   Keyboard,
   Platform,
   Dimensions
-} from "react-native";
-import {Card, FormLabel, FormInput} from 'react-native-elements';
-import { Icon, Button, Container, Header, Content, Left, Right} from 'native-base';
+} 
+from "react-native";
+import { Card, Form, Input, Label, Item, Icon, List, ListItem, Button, Container, Header, Footer, Content, Left, Right} from 'native-base';
 import CustomHeader from './CustomHeader';
+import * as firebase from 'firebase';
 
-const isAndroid = Platform.OS == "android";
-const viewPadding = 10;
+var data =[]
+const firebaseConfig = {
 
-export default class ChatList extends Component {
-   
-    state = {
-        tasks: [],
-        text: ""
-      };
-    
-      changeTextHandler = text => {
-        this.setState({ text: text });
-      };
-    
-      addTask = () => {
-        let notEmpty = this.state.text.trim().length > 0;
-    
-        if (notEmpty) {
-          this.setState(
-            prevState => {
-              let { tasks, text } = prevState;
-              return {
-                tasks: tasks.concat({ key: tasks.length, text: text }),
-                text: ""
-              };
-            },
-            () => Tasks.save(this.state.tasks)
-          );
-        }
-      };
-    
-      deleteTask = i => {
-        this.setState(
-          prevState => {
-            let tasks = prevState.tasks.slice();
-    
-            tasks.splice(i, 1);
-    
-            return { tasks: tasks };
-          },
-          () => Tasks.save(this.state.tasks)
-        );
-      };
-    
-      componentDidMount() {
-        Keyboard.addListener(
-          isAndroid ? "keyboardDidShow" : "keyboardWillShow",
-          e => this.setState({ viewPadding: e.endCoordinates.height + viewPadding })
-        );
-    
-        Keyboard.addListener(
-          isAndroid ? "keyboardDidHide" : "keyboardWillHide",
-          () => this.setState({ viewPadding: viewPadding })
-        );
-    
-        Tasks.all(tasks => this.setState({ tasks: tasks || [] }));
-      }
+  apiKey: "AIzaSyAVKTCqHlIxeorY_PNoVHiECHEO9v0z74A",
+  authDomain: "websource-1524141603398.firebaseapp.com",
+  databaseURL: "https://websource-1524141603398.firebaseio.com",
+  projectId: "websource-1524141603398",
+  storageBucket: "websource-1524141603398.appspot.com",
+  messagingSenderId: "228322576913"
+};
 
-      
-  render() {
+firebase.initializeApp(firebaseConfig);
+
+var data = []
+
+export default class ChatList extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+
+    this.state = {
+      listViewData: data,
+      newContact: ""
+    }
+
+  }
+
+  componentDidMount() {
+
+    var that = this
+
+    firebase.database().ref('/notes').on('child_added', function (data) {
+
+      var newData = [...that.state.listViewData]
+      newData.push(data)
+      that.setState({ listViewData: newData })
+
+    })
+
+  }
+
+  addRow(data) {
+
+    var key = firebase.database().ref('/notes').push().key
+    firebase.database().ref('/notes').child(key).set({ name: data })
+  }
+
+  async deleteRow(secId, rowId, rowMap, data) {
+
+    await firebase.database().ref('notes/' + data.key).set(null)
+
+    rowMap[`${secId}${rowId}`].props.closeRow();
+    var newData = [...this.state.listViewData];
+    newData.splice(rowId, 1)
+    this.setState({ listViewData: newData });
+
+  }
+
+  showInformation() {
+
+  }
+
+ 
+  renderSeparator = () => {
     return (
+      <View
+        style={{
+          height: 1,
+          width: "86%",
+          backgroundColor: "#CED0CE",
+          marginLeft: "14%"
+        }}
+      />
+    );
+  };
 
-        
-       <Container
-      >
-              <CustomHeader title="Note" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
-<View style={[styles.container, { paddingBottom: this.state.viewPadding }]}>
-        <FlatList
-          style={styles.list}
-          data={this.state.tasks}
-          renderItem={({ item, index }) =>
-            <View>
-              <View style={styles.listItemCont}>
-                <Text style={styles.listItem}>
-                  {item.text}
-                </Text>
-                <Button title="X" onPress={() => this.deleteTask(index)} />
-              </View>
-              <View style={styles.hr} />
-            </View>}
-        />
-        <TextInput
-          style={styles.textInput}
-          onChangeText={this.changeTextHandler}
-          onSubmitEditing={this.addTask}
-          value={this.state.text}
-          placeholder="Add Tasks"
-          returnKeyType="done"
-          returnKeyLabel="done"
-        />
-      </View>
+  render() {
+    return (      
+<Container style={styles.container}>
+              <CustomHeader title="Notes" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')}/>
+        <Content>
+          <List
+            enableEmptySections
+            dataSource={this.ds.cloneWithRows(this.state.listViewData)}
+            renderRow={data =>
+              <Card style={styles.card}>
+              <ListItem 
+              ItemSeparatorComponent={this.renderSeparator}
+              style={styles.listItem}
+              >
+                <Text> {data.val().name}</Text>
+              </ListItem>
+              </Card>
+
+            }
+            renderLeftHiddenRow={data =>
+              <Button full onPress={() => this.addRow(data)} >
+                <Icon name="information-circle" />
+              </Button>
+            }
+            renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+              <Button full danger onPress={() => this.deleteRow(secId, rowId, rowMap, data)}>
+                <Icon name="trash" />
+              </Button>
+
+            }
+
+            leftOpenValue={-50}
+            rightOpenValue={-60}
+
+          />
+
+        </Content>
+        <Footer>
+              <Content>
+            <Item>
+              <Input
+                style={styles.input}
+                onChangeText={(newContact) => this.setState({ newContact })}
+                placeholder="Place note here"
+                placeholderTextColor= '#fff'
+              />
+              <Button style={styles.button}
+                      onPress={() => this.addRow(this.state.newContact)}>
+                <Icon name="add" />
+              </Button>
+            </Item>
+          </Content>
+        </Footer>
 </Container>
 
 
@@ -114,58 +157,30 @@ export default class ChatList extends Component {
   }
 }
 
+const styles = StyleSheet.create({
 
-let Tasks = {
-    convertToArrayOfObject(tasks, callback) {
-      return callback(
-        tasks ? tasks.split("||").map((task, i) => ({ key: i, text: task })) : []
-      );
-    },
-    convertToStringWithSeparators(tasks) {
-      return tasks.map(task => task.text).join("||");
-    },
-    all(callback) {
-      return AsyncStorage.getItem("TASKS", (err, tasks) =>
-        this.convertToArrayOfObject(tasks, callback)
-      );
-    },
-    save(tasks) {
-      AsyncStorage.setItem("TASKS", this.convertToStringWithSeparators(tasks));
-    }
-  };
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#F5FCFF",
-      padding: viewPadding,
-      paddingTop: 20
-    },
-    list: {
-      width: "100%"
-    },
-    listItem: {
-      paddingTop: 2,
-      paddingBottom: 2,
-      fontSize: 18
-    },
-    hr: {
-      height: 1,
-      backgroundColor: "gray"
-    },
-    listItemCont: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between"
-    },
-    textInput: {
-      height: 40,
-      paddingRight: 10,
-      paddingLeft: 10,
-      borderColor: "gray",
-      width: "100%"
-    }
-  });
-  
+container:{
+  backgroundColor: '#fafafa',
+  flex: 1,
+},
+input:{
+  color: '#fff',
+  backgroundColor: '#129fcb'
+},
+button:{
+  backgroundColor: '#129fcb',
+},
+listItem:{
+  paddingBottom: 20,
+
+},
+card:{
+  borderWidth: 1,
+  borderRadius: 5,
+  borderColor: '#0984e3',
+  marginLeft: 10,
+  marginRight: 10,
+  marginBottom: 10,
+},
+
+})
