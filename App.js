@@ -8,11 +8,13 @@ import React, { Component } from 'react';
 import {AppRegistry, Platform, StyleSheet, Text, View } from 'react-native';
 import { StackNavigator, DrawerNavigator, TabBarTop, TabNavigator } from 'react-navigation';
 import * as firebase from 'firebase';
+import { Provider } from 'react-redux';
 
 import {isSignedIn} from './components/Login/Auth';
 import SignIn from './components/Login/SignIn';
 import Home from './components/Dashboard/Home';
 import {createRootNavigator} from './components/Navigation/Navigation';
+import store from './components/redux/store';
 
 export default class App extends Component{
 
@@ -39,6 +41,10 @@ export default class App extends Component{
     }
    
     const Layout = createRootNavigator(signedIn);
-      return <Layout /> 
+      return (
+      <Provider store={store}>
+      <Layout />
+      </Provider>
+      ) 
 }
 }

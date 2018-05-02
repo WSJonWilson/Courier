@@ -9,7 +9,7 @@ YellowBox.ignoreWarnings([
     'Warning: componentWillReceiveProps is deprecated',
     'Warning: Failed prop type: ',
     'Warning: isMounted(...) is deprecated in plain JavaScript React classes.',
-    'Warning: Setting a timer for a long period of time, i.e multiple minutes, is a performance and correctness issue on Android as it keeps the timer module awake,'
+    'Setting a timer'
   ]);
 
 AppRegistry.registerComponent('CourierApp', () => App);

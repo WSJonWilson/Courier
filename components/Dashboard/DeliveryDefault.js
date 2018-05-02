@@ -9,10 +9,12 @@ import CustomHeader from './CustomHeader';
 
 import DeliveryDetails from  './DeliveryDetails'
 import ModalDetails from './Modal';
+import { connect } from 'react-redux';
+import {fetchPackageDetails} from '../redux/actions/packageActions';
 
 
 
-export default class DeliveryDefault extends Component {
+ class DeliveryDefault extends Component {
   
 
   constructor(props){
@@ -20,10 +22,13 @@ export default class DeliveryDefault extends Component {
     super(props);
     const { navigation } = this.props;
 
-    this.state = { isLoading: true,
+    this.state = { 
+      data: [],
+    //  isLoading: true,
       isModalVisible: false,
       selectedItem: null,
-        text: ''};
+      text: ''
+    };
   };
 
    onPressItem = (item) => { 
@@ -40,7 +45,9 @@ toggleModal = (item) => this.setState({ isModalVisible: true,
   _keyExtractor = (item, index) => item.id;
 
  /* setModalVisible(visible) {
+
     this.setState({modalVisible: visible});
+    
   } */
 
   
@@ -61,7 +68,7 @@ toggleModal = (item) => this.setState({ isModalVisible: true,
     }
       subtitle={
       <View style={styles.subtitle}>
-       <Text>{`${item.Tel1}`} / {`${item.Tel2}`}</Text><Text style={{fontSize: 14, color: '#0984e3', fontWeight: '400'}}>0 Packages</Text>
+       <Text>{`${item.Tel1}`} / {`${item.Tel2}`}</Text>
       <Text>
       {`${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`}
       </Text>
@@ -111,62 +118,35 @@ toggleModal = (item) => this.setState({ isModalVisible: true,
   };
 
   componentDidMount(){
+this.props.fetchPackageDetails();
 
-  fetch('http://websource.shipwebsource.com/logiksys/courier-app-services/get-route-packages.php')
-    .then(response => response.json())
-    
-    .then(responseJson => {
-      this.setState({
-        isLoading: false,
-        dataSource: responseJson.customer 
-      },
-       function(){
-      });
-   })
-    .catch((error) => {
-      console.error(error);
-    });
-
-    fetch('http://websource.shipwebsource.com/logiksys/courier-app-services/get-route-packages.php')
-    .then(response => response.json())
-    
-    .then(responseJson => {
-      this.setState({
-        isLoading: false,
-        dataSource: responseJson.package 
-      },
-       function(){
-      });
-   })
-    .catch((error) => {
-      console.error(error);
-    });
-    
 }
 
   render(){
     const { navigation } = this.props
 
-    if(this.state.isLoading){
-      return(
-        <View style={{flex: 1, padding: 20, justifyContent: 'center', alignContent: 'center'}}>
-          <ActivityIndicator/>
-          <Text style={styles.load}>Loading Customers...</Text>
-        </View>
-      )
-    }
+   if(this.state.isLoading){
+     return(
+    <View style={{flex: 1, padding: 20, justifyContent: 'center', alignContent: 'center'}}>
+      <ActivityIndicator/>
+    <Text style={styles.load}>Loading Customers...</Text>
+     </View>
+   )
+}
 
   return(
 <Container>
+
 {this.state.selectedItem && 
 <ModalDetails
         modalVisible={this.state.isModalVisible} 
         selectedItem={this.state.selectedItem}
-        hideModal={this.hideMyModal}         />}
+        hideModal={this.hideMyModal}        
+     />}
 
    <List style={{flex: 1,}}>
         <FlatList
-          data={this.state.dataSource}
+          data={this.props.package.customer}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
           ListFooterComponent={this.renderFooter}
@@ -182,6 +162,10 @@ toggleModal = (item) => this.setState({ isModalVisible: true,
 //https://codeburst.io/integrating-react-native-apps-with-back-end-code-using-fetch-api-8aeb83dfb428
 }
 
+const mapStateToProps = state => ({
+  package: state.package.items
+})
+export default connect(mapStateToProps, {fetchPackageDetails})(DeliveryDefault);
 
 const styles = StyleSheet.create({
 
@@ -255,3 +239,4 @@ const styles = StyleSheet.create({
 
 
 })
+
