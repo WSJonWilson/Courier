@@ -8,7 +8,7 @@ const initialState ={
 export default function (state = initialState, action){
       switch(action.type) {
          case FETCH_PACKAGES: 
-         console.warn('reducer');
+         //console.warn('reducer');
             return {
              ...state,
              items: action.payload

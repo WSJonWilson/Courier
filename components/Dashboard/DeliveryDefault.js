@@ -9,6 +9,7 @@ import CustomHeader from './CustomHeader';
 
 import DeliveryDetails from  './DeliveryDetails'
 import ModalDetails from './Modal';
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
 import {fetchPackageDetails} from '../redux/actions/packageActions';
 
@@ -23,26 +24,25 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
     const { navigation } = this.props;
 
     this.state = { 
-      data: [],
     //  isLoading: true,
-      isModalVisible: false,
+     /// isModalVisible: false,
       selectedItem: null,
       text: ''
     };
   };
 
-   onPressItem = (item) => { 
-    this.toggleModal (item);
-  };
+ ///  onPressItem = (item) => { 
+ ///   this.toggleModal (item);
+ /// };
 
-  hideMyModal = () => {
-    this.setState({isModalVisible: false})
-}
+//  hideMyModal = () => {
+ //   this.setState({isModalVisible: false})
+//}
   
-toggleModal = (item) => this.setState({ isModalVisible: true, 
-  selectedItem: item })
+//toggleModal = (item) => this.setState({ isModalVisible: true, 
+ // selectedItem: item })
   
-  _keyExtractor = (item, index) => item.id;
+ // _keyExtractor = (item, index) => item.id;
 
  /* setModalVisible(visible) {
 
@@ -52,34 +52,40 @@ toggleModal = (item) => this.setState({ isModalVisible: true,
 
   
   renderItem = ({item}) => (       
-    <TouchableOpacity
-    onPress={this.toggleModal}
-    >
+    <TouchableOpacity>
 
     <ListItem
         item={item}
-        onPressItem={() => this._onPressItem(item)}
-    title={     
-    <View>     
-    <Text style={styles.title}>
-          {`${item.Title} ${item.FirstName} ${item.LastName}`} - #{`${item.AccountNumber}`}
-    </Text>
-   </View>
-    }
-      subtitle={
-      <View style={styles.subtitle}>
-       <Text>{`${item.Tel1}`} / {`${item.Tel2}`}</Text>
-      <Text>
-      {`${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`}
-      </Text>
-      </View>
-    }    
+        onPress={() => this.props.navigation.navigate("DeliveryDetails", { 
+          title: `${item.Title}`,
+          firstname: ` ${item.FirstName}`,
+          lastname: `${item.LastName}`,
+          address: `${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`,
+          contact1: `${item.Tel1}`,
+          contact2: `${item.Tel2}` ,
+          accountNumber: `${item.AccountNumber}`,
+          emailSent: `${item.EmailSent}`,
+         })}
+        title={     
+               <View>     
+                  <Text style={styles.title}>
+                  {`${item.Title} ${item.FirstName} ${item.LastName}`} - #{`${item.AccountNumber}`} 
+                  </Text> 
+               </View>
+              }
+        subtitle={
+              <View style={styles.subtitle}>
+                  <Text>{`${item.Tel1}`} / {`${item.Tel2}`}</Text>
+                  <Text>
+                        {`${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`}
+                 </Text>
+              </View>
+                 }    
     />     
-    </TouchableOpacity>
-     
+    </TouchableOpacity> 
     );
 
-    
+
   renderSeparator = () => {
     return (
       <View
@@ -137,13 +143,12 @@ this.props.fetchPackageDetails();
   return(
 <Container>
 
-{this.state.selectedItem && 
-<ModalDetails
+{/*<ModalDetails
         modalVisible={this.state.isModalVisible} 
         selectedItem={this.state.selectedItem}
         hideModal={this.hideMyModal}        
      />}
-
+*/}
    <List style={{flex: 1,}}>
         <FlatList
           data={this.props.package.customer}

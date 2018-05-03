@@ -8,5 +8,4 @@ export const fetchPackageDetails = () => dispatch  => {
       type: FETCH_PACKAGES,
       payload: data    
  }))
-  .then(data => console.warn(data)); 
 }

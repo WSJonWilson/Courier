@@ -15,6 +15,7 @@ import DeliveryComplete from '../Dashboard/DeliveryComplete';
 import DeliveryDefault from '../Dashboard/DeliveryDefault';
 import DeliveryHold from '../Dashboard/DeliveryHold';
 import ModalDetails from '../Dashboard/Modal';
+import PackageDetails from '../Dashboard/PackageDetails';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -41,7 +42,11 @@ export const SignedOut = StackNavigator({
     },
     ModalDetails:{
       screen:ModalDetails
+    },
+    PackageDetails:{
+      screen: PackageDetails
     }
+
   },
 
   {

@@ -20,40 +20,7 @@ export default class CustomerDetails extends React.Component {
         <CustomHeader title="Customer Details" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
         <SearchBar
   placeholder='Type Here...' />
-        <Content
-          style={styles.contentContainer}>   
-
-        <View style={styles.mapContainer}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          region={{
-            latitude: 10.6186137,
-            longitude: -61.34718,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
-        ></MapView>
-          </View>
-<View style={styles.cardContainer}>
-     <Card>
-     <ScrollView>
-        <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          <Text>Notes</Text>
-          {/*Will Replace with Details Component. Name of this parent component will change. */}
-      </ScrollView>   
-     </Card>
-</View> 
-
-                </Content>
+        
 </Container>
 
     )
