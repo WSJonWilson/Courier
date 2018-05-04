@@ -26,7 +26,7 @@ class Home extends Component {
     return (
 
       <LinearGradient 
-      colors={['#fefefe', '#dddd']} 
+      colors={['#fefefe', '#fafafa']} 
       style={styles.container}>
         <CustomHeader title="Home" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
         <Content
@@ -36,7 +36,9 @@ class Home extends Component {
 
    <View style={styles.viewContainer}>
         
-      <Card style={styles.cardContainer}>
+      <LinearGradient style={styles.cardContainer}
+            colors={['#129fcb', '#fafafa']} 
+            >
               <View style={styles.boxContainer}> 
               <Text style={styles.counter}> 0 </Text>
               <Text style={styles.text}>Packages Left</Text>
@@ -51,7 +53,7 @@ class Home extends Component {
               <Text style={styles.counter}> $0.00 </Text>
               <Text style={styles.text}> Cash Collected </Text>   
               </View>
-       </Card> 
+       </LinearGradient> 
   </View>  
   {/* *********** NOTES ***********/}
         <Card style={styles.notesContainer}>
@@ -123,7 +125,6 @@ export default Home;
     },
 
   cardContainer:{
-    backgroundColor: '#fafafa',
     flex: 1,
     flexDirection: 'row',
     height: 130,
@@ -145,6 +146,7 @@ export default Home;
       justifyContent: 'center',
       textAlign: 'center',
       fontSize: 26,
+      color: '#fff',
     },
 
   line:{

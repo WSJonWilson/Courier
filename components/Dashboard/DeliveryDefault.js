@@ -107,6 +107,7 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
               />;
   };
 
+
   renderFooter = () => {
     if (!this.state.loading) return null;
 
