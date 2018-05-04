@@ -8,12 +8,13 @@ const initialState ={
 export default function (state = initialState, action){
       switch(action.type) {
          case FETCH_PACKAGES: 
-         //console.warn('reducer');
             return {
              ...state,
              items: action.payload
           };
 
+            //insert another fetch action to retrieve package data.
+            //attempt to call both arrays and link package data using account number. TRY.
         default:
         return state; 
     }
