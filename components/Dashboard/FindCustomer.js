@@ -7,6 +7,9 @@ import DeliveryDefault from './DeliveryDefault';
 import PackageDetails from './PackageDetails';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import Geocoder from 'react-native-geocoder';
+
+
 
 export default class FindCustomer extends Component {
 
@@ -18,49 +21,51 @@ export default class FindCustomer extends Component {
   }
 
   componentDidMount() {
-    // find your origin and destination point coordinates and pass it to our method.
-    // I am using Bursa,TR -> Istanbul,TR for this example
-    this.getDirections("40.1884979, 29.061018", "41.0082,28.9784")
+   
   }
 
-  async getDirections(startLoc, destinationLoc) {
-    try {
-        let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${ startLoc }&destination=${ destinationLoc }`)
-        let respJson = await resp.json();
-        let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
-        let coords = points.map((point, index) => {
-            return  {
-                latitude : point[0],
-                longitude : point[1]
-            }
+  geocodeAddress(geocoder, resultsMap){
+    var address = params.address;
+    gecoder.gecode({'address': address}, function(results, status){
+      if (status == 'OK'){
+        resultsMap.setCenter(results[0].geometry.location);
+        var marker = new GooglePlacesAutocomplete.maps.Marker({
+          map: resultsMap,
+          position: results[0].geometry.location
         })
-        this.setState({coords: coords})
-        return coords
-    } catch(error) {
-        return error
-    }
-}
-
-
+      } else {
+        alert('Geicide was bit successful for the following reason: '+ status);
+      }
+    });
+  }
   render() {
     const { params } = this.props.navigation.state;
     return (
 
       <MapView style={styles.map} initialRegion={{
-        latitude:41.0082, 
-        longitude:28.9784, 
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
+        latitude: 10.6186137,
+        longitude: -61.34718,
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.0121,
       }}>
 
-      <MapView.Polyline 
-          coordinates={this.state.coords}
-          strokeWidth={2}
-          strokeColor="red"/>
+      <MapView.Marker
+        coordinate={{
+          latitude: 10.6186137,
+          longitude: -61.34718,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+                  }}
+        title={"title"}
+        description ={"Testing 123456789"} 
+
+        />
       </MapView>
+      
 
     )
   }
+
 }const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -68,10 +73,9 @@ export default class FindCustomer extends Component {
   },
   map: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+   height: 500,
+   left: 0,
+   right: 0,
     flex: 1,
 
   },

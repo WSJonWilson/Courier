@@ -58,7 +58,7 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
         item={item}
         onPress={() => this.props.navigation.navigate("DeliveryDetails", { 
           title: `${item.Title}`,
-          firstname: ` ${item.FirstName}`,
+          firstname: `${item.FirstName}`,
           lastname: `${item.LastName}`,
           address: `${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`,
           contact1: `${item.Tel1}`,

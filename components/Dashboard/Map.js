@@ -11,6 +11,7 @@ import CustomHeader from './CustomHeader';
 
 export default class GMap extends React.Component {
 
+  
   render() {
 
     const { region } = this.props;

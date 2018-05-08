@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
+import com.devfd.RNGeocoder.RNGeocoderPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -28,8 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new RNGooglePlacesPackage(),
             new LinearGradientPackage(),
-          new MapsPackage()
-      );
+            new RNGeocoderPackage(),
+          new MapsPackage());
     }
 
     @Override

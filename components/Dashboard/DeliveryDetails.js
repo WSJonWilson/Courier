@@ -8,8 +8,17 @@ import PackageDetails from './PackageDetails';
 
 export default class DeliveryDetails extends Component {
 
+  
+  constructor(props){
+    
+    super(props);
+    const { navigation } = this.props;
+  };
+
+
   render() {
     const { params } = this.props.navigation.state;
+    
     return (
 
 <Container style={styles.container}>
@@ -34,7 +43,9 @@ export default class DeliveryDetails extends Component {
 </Card>
 <View>
         <TouchableOpacity style={styles.DetailsButton}
-                    onPress={() => this.props.navigation.navigate('FindCustomer')}   
+                    onPress={() => this.props.navigation.navigate("FindCustomer", {
+                     address: params.address
+                    })}   
 
         ><Text style={styles.text}>Get Route</Text></TouchableOpacity>
 </View>
