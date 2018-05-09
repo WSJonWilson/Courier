@@ -29,6 +29,7 @@
     "react-native-linear-gradient": "^2.4.0",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-maps": "^0.21.0",
+    "react-native-maps-directions": "^1.6.0",
     "react-native-modal": "^5.4.0",
     "react-native-redux-listener": "^0.3.0",
     "react-native-router-flux": "^4.0.0-beta.28",
