@@ -16,7 +16,6 @@ import DeliveryDefault from '../Dashboard/DeliveryDefault';
 import DeliveryHold from '../Dashboard/DeliveryHold';
 import ModalDetails from '../Dashboard/Modal';
 import PackageDetails from '../Dashboard/PackageDetails';
-import FindCustomer from '../Dashboard/FindCustomer';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -47,9 +46,7 @@ export const SignedOut = StackNavigator({
     PackageDetails:{
       screen: PackageDetails
     },
-    FindCustomer:{
-      screen: FindCustomer
-    }
+   
   },
 
   {

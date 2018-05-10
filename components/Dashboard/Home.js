@@ -42,7 +42,7 @@ class Home extends Component {
   render() {
     return (
 
-      <LinearGradient colors={['#fefefe', '#fafafa']} style={styles.container}>
+      <LinearGradient colors={['#37474f', '#37474f']} style={styles.container}>
         <CustomHeader
           title="Home"
           drawerOpen={() => this.props.navigation.navigate('DrawerOpen')}/>
@@ -54,7 +54,7 @@ class Home extends Component {
 
           <View style={styles.viewContainer}>
 
-            <LinearGradient style={styles.cardContainer} colors={['#129fcb', '#fafafa']}>
+            <View style={styles.cardContainer}>
               <View style={styles.boxContainer}>
                 <Text style={styles.counter}>
                   0
@@ -77,7 +77,7 @@ class Home extends Component {
                   Cash Collected
                 </Text>
               </View>
-            </LinearGradient>
+            </View>
           </View>
           {/* *********** NOTES ***********/}
           <Card style={styles.notesContainer}>
@@ -95,7 +95,6 @@ class Home extends Component {
               full>
               <Text>New Note</Text>
             </Button>
-
           </Card>
 
           <Card style={styles.chatContainer}>
@@ -127,12 +126,14 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#263238'
   },
   viewContainer: {
     flex: 1,
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    backgroundColor: '#263238',
   },
 
   icon: {
@@ -153,7 +154,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 130,
     paddingTop: 22,
-    marginTop: 0
+    marginTop: 0,
+    backgroundColor: '#37474f'
   },
 
   text: {
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   notesContainer: {
-    backgroundColor: '#fefefe',
+    backgroundColor: '#37474f',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
     elevation: 0
   },
   chatContainer: {
-    backgroundColor: '#fefefe',
+    backgroundColor: '#37474f',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     color: '#0984e3',
-    backgroundColor: '#fff',
+    backgroundColor: '#cfd8dc',
     borderRadius: 50
   }
 
