@@ -26,48 +26,62 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import MapViewDirections from 'react-native-maps-directions';
 import Geocoder from 'react-native-geocoding';
+import querystring from 'query-string';
 
 const {width, height} = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 var geocoder;
+var location;
+const googleUrl = 'https://maps.google.com/maps/api/geocode/json';
 
 export default class DeliveryDetails extends Component {
 
   constructor(props) {
     super(props);
-    };
 
-     codeAddress() {
-      Geocoder.init('AIzaSyAcyBKStwZ2oeVgqNn7GwrGu9g0EQtbDpI'); // use a valid API key
-      Geocoder.from(address)
-          .then(json => {
-            var location = json.results[0].geometry.location;
-            console.warn(location);
-          }); 
-          if (location == true){
-          map.setCenter(results[0].geometry.location);
-          var marker = new google.maps.Marker({
-              map: map,
-              position: results[0].geometry.location
-          });
-        }
-      }
+    this.setState={
+      location: ''
+    }
+    //state
+  };
 
+  codeAddress(address) {
+    Geocoder.init('AIzaSyAcyBKStwZ2oeVgqNn7GwrGu9g0EQtbDpI'); // use a valid API key
+    Geocoder.from(address)
+    .then(res => res.json())
+    .then((data)=>{
+
+      this.setState({
+       location: json.results[0].geometry.location
+      });     
+       console.warn(address);
+        console.warn(location);
+    });
+  }
+  
   render() {
     const {params} = this.props.navigation.state;
-    const address = params.address;
+    const address = JSON.stringify(params.address);
+
+    //Data received in address
+    console.warn(address);
+
     // var geocoder = new google.maps.Geocoder(); var address =
     // this.props.navigation.state.address; geocoder.geocode( { 'address': address},
     // function(results, status) { if (status == google.maps.GeocoderStatus.OK) {
-    //  var latitude = results[0].geometry.location.latitude;     var longitude =
+    // var latitude = results[0].geometry.location.latitude;     var longitude =
     // results[0].geometry.location.longitude;     console.warn(latitude);     } });
 
     return (
 
       <Container style={styles.container}>
 
-        <Content contentContainerStyle={{
-          flex: 1
+        <Content
+          contentContainerStyle={{
+          flex: 1,
+          flexDirection: 'column',
+          alignItems: 'stretch',
+          height: 650
         }}>
 
           <MapView
@@ -99,25 +113,36 @@ export default class DeliveryDetails extends Component {
               description
               ={"Testing 123456789"}/>
           </MapView>
+        </Content>
+        <Content
+          contentContainerStyle={{
+          flex: 1,
+          flexDirection: 'column',
+          alignContent: 'stretch',
+          height: 400
+        }}>
           <Card style={styles.card}>
-            <Text>Full Name: {`${params.title} ${params.firstname} ${params.lastname} \n`}</Text>
-            <Text>Address: {`${params.address}`}
-            </Text>
-            <Text>Contact: {`${params.contact1}`}, {`${params.contact2}`}
-            </Text>
-            <Text>Account Number: {`${params.accountNumber}`}</Text>
-            <Text>Email Sent: {`${params.emailSent}`}
-            </Text>
-            <Text>
-              . . .
-            </Text>
-
+            <View style={{paddingBottom: 30,
+                            fontSize: 22,
+                        }}>
+              <Text>Full Name: {`${params.title} ${params.firstname} ${params.lastname} \n`}</Text>
+              <Text>Address: {`${params.address}`}
+              </Text>
+              <Text>Contact: {`${params.contact1}`}, {`${params.contact2}`}
+              </Text>
+              <Text>Account Number: {`${params.accountNumber}`}</Text>
+              <Text>Email Sent: {`${params.emailSent}`}
+              </Text>
+              <Text>
+                . . .
+              </Text>
+            </View>
             <View style={styles.buttonWrapper}>
               <View style={styles.buttonContainer}>
                 <Button
                   style={styles.DetailsButton}
                   onPress={() => this.props.navigation.navigate("FindCustomer", {address: `${params.address}`})}>
-                  <Text style={styles.text}>Get Route</Text>
+                  <Text style={styles.text}>Route</Text>
                 </Button>
               </View>
 
@@ -125,15 +150,13 @@ export default class DeliveryDetails extends Component {
                 <Button
                   onPress={() => this.props.navigation.navigate('PackageDetails')}
                   style={styles.DetailsButton}>
-                  <Text style={styles.text}>View Packages</Text>
+                  <Text style={styles.text}>Packages</Text>
                 </Button>
               </View>
 
-            <View style={styles.buttonContainer}>
-                <Button
-                  onPress={this.codeAddress}
-                  style={styles.DetailsButton}>
-                  <Text style={styles.text}>Get Location</Text>
+              <View style={styles.buttonContainer}>
+                <Button onPress={this.codeAddress} style={styles.DetailsButton2}>
+                  <Text style={styles.text}>Location</Text>
                 </Button>
               </View>
             </View>
@@ -149,14 +172,16 @@ export default class DeliveryDetails extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f6f6'
+    backgroundColor: '#f6f6f6',
+    justifyContent: 'space-between'
   },
 
   buttonWrapper: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingBottom: 20,
   },
 
   buttonContainer: {
@@ -164,31 +189,55 @@ const styles = StyleSheet.create({
   },
 
   card: {
+    alignItems: 'stretch',
     flex: 1,
+    flexGrow: 1, 
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#0984e3',
     position: 'relative',
     paddingBottom: 10,
     marginBottom: 30,
+    height: 350,
     top: 0,
     left: 0,
-    right: 0,
-    bottom: 0
+    right: 0
   },
 
   DetailsButton: {
     backgroundColor: '#0984e3',
     color: '#fff',
-    borderRadius: 10,
-    padding: 5,
+    borderRadius: 5,
+    paddingTop: 25,
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingBottom: 25,
     borderColor: '#fff',
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 5,
-    marginBottom: 5
+    marginTop: 15,
+    marginBottom: 15
+
   },
+  DetailsButton2: {
+    backgroundColor: '#0984e3',
+    color: '#fff',
+    borderRadius: 5,
+    paddingTop: 25,
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingBottom: 25,
+    borderColor: '#fff',
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
+    marginBottom: 15,
+    marginLeft: 20
+
+  },
+
   ListItem: {
     borderBottomWidth: 0
   },
@@ -201,35 +250,14 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 17
   },
-  Modal: {
-    flex: 1,
-    height: 600
-
-  },
 
   map: {
     position: 'relative',
-    height: 700,
+    paddingBottom: 100,
+    height: 650,
     left: 0,
     right: 0,
     flex: 1
-  },
-
-  ModalButton: {
-    backgroundColor: '#0984e3',
-    color: '#fff',
-    marginLeft: 75,
-    marginRight: 75,
-    borderRadius: 10
-  },
-  ModalInsideView: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-    width: '100%',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#00BCD4'
-
   },
 
   text: {

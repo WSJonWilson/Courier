@@ -79,7 +79,11 @@ class Home extends Component {
               </View>
             </View>
           </View>
-          {/* *********** NOTES ***********/}
+<Container style={{backgroundColor: '#000',
+                     alignItems: 'stretch',
+                     alignContent: 'center',
+                     justifyContent: 'center',
+                  }}>
           <Card style={styles.notesContainer}>
             <View>
               <Text style={styles.heading}>Notes</Text>
@@ -93,9 +97,11 @@ class Home extends Component {
               style={styles.Button}
               onPress={() => this.props.navigation.navigate('Note')}
               full>
-              <Text>New Note</Text>
+              <Text style={styles.text}>New Note</Text>
             </Button>
           </Card>
+</Container>
+<Container style={{backgroundColor: '#000'}}>
 
           <Card style={styles.chatContainer}>
             <View>
@@ -110,11 +116,11 @@ class Home extends Component {
               style={styles.Button}
               onPress={() => this.props.navigation.navigate('Chat')}
               full>
-              <Text>New Message</Text>
+              <Text style={styles.text}>New Message</Text>
             </Button>
           </Card>
-
-        </Content>
+</Container>
+    </Content>
       </LinearGradient>
 
     )
@@ -127,13 +133,13 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#263238'
+    backgroundColor: '#000'
   },
   viewContainer: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: '#263238',
+    backgroundColor: '#000',
   },
 
   icon: {
@@ -155,11 +161,11 @@ const styles = StyleSheet.create({
     height: 130,
     paddingTop: 22,
     marginTop: 0,
-    backgroundColor: '#37474f'
+    backgroundColor: '#263238'
   },
 
   text: {
-    color: '#0984e3',
+    color: '#fafafa',
     fontSize: 14,
     paddingTop: 10,
     paddingBottom: 10,
@@ -174,11 +180,7 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
 
-  line: {
-    borderBottomWidth: 2,
-    borderColor: '#0000',
-    marginBottom: 5
-  },
+
 
   heading: {
     fontSize: 20,
@@ -187,7 +189,11 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   notesContainer: {
-    backgroundColor: '#37474f',
+    flex: 1,
+    alignItems: 'stretch',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#263238',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
@@ -195,7 +201,7 @@ const styles = StyleSheet.create({
     elevation: 0
   },
   chatContainer: {
-    backgroundColor: '#37474f',
+    backgroundColor: '#263238',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 10,
@@ -205,11 +211,10 @@ const styles = StyleSheet.create({
   },
   Button: {
     marginTop: 5,
-    marginLeft: 40,
-    marginRight: 40,
+    marginLeft: 100,
+    marginRight: 100,
     color: '#0984e3',
     backgroundColor: '#cfd8dc',
-    borderRadius: 50
   }
 
 });

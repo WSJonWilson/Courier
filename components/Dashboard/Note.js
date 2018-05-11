@@ -131,6 +131,7 @@ export default class ChatList extends React.Component {
           drawerOpen={() => this.props.navigation.navigate('DrawerOpen')}/>
         <Content>
           <List
+          style={{backgroundColor: '#263238'}}
             enableEmptySections
             dataSource={this
             .ds
@@ -178,8 +179,8 @@ export default class ChatList extends React.Component {
 const styles = StyleSheet.create({
 
   container: {
-    backgroundColor: '#fafafa',
-    flex: 1
+    backgroundColor: '#263238',
+        flex: 1
   },
   input: {
     color: '#fff',
