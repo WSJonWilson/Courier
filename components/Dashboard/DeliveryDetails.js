@@ -32,39 +32,48 @@ const {width, height} = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 var geocoder;
 var location;
-const googleUrl = 'https://maps.google.com/maps/api/geocode/json';
 
 export default class DeliveryDetails extends Component {
 
   constructor(props) {
     super(props);
 
-    this.setState={
+    this.setState = {
       location: ''
     }
     //state
   };
 
-  codeAddress(address) {
-    Geocoder.init('AIzaSyAcyBKStwZ2oeVgqNn7GwrGu9g0EQtbDpI'); // use a valid API key
-    Geocoder.from(address)
-    .then(res => res.json())
-    .then((data)=>{
+  async codeAddress(address) {
 
-      this.setState({
-       location: json.results[0].geometry.location
-      });     
-       console.warn(address);
-        console.warn(location);
-    });
+    const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=`+`${address}`+`&key=AIzaSyAcyBKStwZ2oeVgqNn7GwrGu9g0EQtbDpI&callback`)
+    const gdata = res.json(address)
+      .then((gdata) => {
+      console.warn(address);
+
+        if (gdata.status === 'OK') {
+          var location = gdata.results[0].geometry.location;
+          console.warn(location);
+        }
+         else 
+        {
+          throw new Error(`Error: ${gdata.status}`);
+        }
+      })
   }
-  
+
+  //   Geocoder.init('AIzaSyAcyBKStwZ2oeVgqNn7GwrGu9g0EQtbDpI'); // use a valid
+  // API key   Geocoder.from(`${googleUrl}`+`${address}`)   .then(res =>
+  // res.json())   .then((data)=>{     this.setState({      location:
+  // json.results[0].geometry.location     });      console.warn(address);
+  // console.warn(location.lat);   });
+
   render() {
     const {params} = this.props.navigation.state;
-    const address = JSON.stringify(params.address);
-
-    //Data received in address
+    const address = params.address;
     console.warn(address);
+    //removed stringify code. check github for line
+    //Data received in address
 
     // var geocoder = new google.maps.Geocoder(); var address =
     // this.props.navigation.state.address; geocoder.geocode( { 'address': address},
@@ -122,16 +131,16 @@ export default class DeliveryDetails extends Component {
           height: 400
         }}>
           <Card style={styles.card}>
-            <View style={{paddingBottom: 30,
-                            fontSize: 22,
-                        }}>
-              <Text>Full Name: {`${params.title} ${params.firstname} ${params.lastname} \n`}</Text>
-              <Text>Address: {`${params.address}`}
+            <View style={{
+              paddingBottom: 30
+            }}>
+              <Text style={styles.text}>Full Name: {`${params.title} ${params.firstname} ${params.lastname} \n`}</Text>
+              <Text style={styles.text}>Address: {`${params.address}`}
               </Text>
-              <Text>Contact: {`${params.contact1}`}, {`${params.contact2}`}
+              <Text style={styles.text}>Contact: {`${params.contact1}`}, {`${params.contact2}`}
               </Text>
-              <Text>Account Number: {`${params.accountNumber}`}</Text>
-              <Text>Email Sent: {`${params.emailSent}`}
+              <Text style={styles.text}>Account Number: {`${params.accountNumber}`}</Text>
+              <Text style={styles.text}>Email Sent: {`${params.emailSent}`}
               </Text>
               <Text>
                 . . .
@@ -142,7 +151,7 @@ export default class DeliveryDetails extends Component {
                 <Button
                   style={styles.DetailsButton}
                   onPress={() => this.props.navigation.navigate("FindCustomer", {address: `${params.address}`})}>
-                  <Text style={styles.text}>Route</Text>
+                  <Text style={styles.buttonText}>Route</Text>
                 </Button>
               </View>
 
@@ -150,13 +159,13 @@ export default class DeliveryDetails extends Component {
                 <Button
                   onPress={() => this.props.navigation.navigate('PackageDetails')}
                   style={styles.DetailsButton}>
-                  <Text style={styles.text}>Packages</Text>
+                  <Text style={styles.buttonText}>Packages</Text>
                 </Button>
               </View>
 
               <View style={styles.buttonContainer}>
                 <Button onPress={this.codeAddress} style={styles.DetailsButton2}>
-                  <Text style={styles.text}>Location</Text>
+                  <Text style={styles.buttonText}>Location</Text>
                 </Button>
               </View>
             </View>
@@ -181,7 +190,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 20,
+    paddingBottom: 20
   },
 
   buttonContainer: {
@@ -191,7 +200,7 @@ const styles = StyleSheet.create({
   card: {
     alignItems: 'stretch',
     flex: 1,
-    flexGrow: 1, 
+    flexGrow: 1,
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#0984e3',
@@ -261,6 +270,14 @@ const styles = StyleSheet.create({
   },
 
   text: {
+    fontSize: 16,
+    fontWeight: '300',
+    marginBottom: 5,
+    padding: 10,
+    textAlign: 'center'
+  },
+
+  buttonText: {
     fontSize: 16,
     fontWeight: '300',
     marginBottom: 5,

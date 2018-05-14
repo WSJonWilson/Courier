@@ -13,15 +13,15 @@ export default class DrawerContainer extends React.Component {
     const { navigation } = this.props
     return (
 
-      <ScrollView>
+      <ScrollView style={{    backgroundColor: '#263238',
+    }}>
 {/* Drawer Header */}
-      <LinearGradient 
-            colors={['#3867d6', '#0abde3']}
+      <View 
             style={styles.drawerHeader}>
             <Image source={require('../../assets/images/avatar.png')}
             style ={styles.drawerImage}/>
             <Text style={styles.accountName}>Jon D. Wilson</Text>
-          </LinearGradient>
+          </View>
 
 {/* Drawer Body */}
     <View style={styles.menuItem}>
@@ -76,9 +76,10 @@ export default class DrawerContainer extends React.Component {
         Find Route
       </Text>
       </View>
-
+      <View style={styles.line}>
+        </View>
       <View style={styles.menuItem}>
-<Icon name="place" 
+<Icon name="toc" 
                 size={20}
                 style={styles.icon}/>
       <Text
@@ -122,7 +123,7 @@ Customer Details      </Text>
 
 const styles = StyleSheet.create({
   accountName:{
-      fontSize: 14,
+      fontSize: 15,
       fontWeight: 'bold',
       color: '#fff',
       textAlign: 'center'
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   drawerItem: {
     fontSize: 18,
     fontWeight: "300",
-    color: '#0984e3',
+    color: '#fafafa',
     paddingTop: 15,
     paddingBottom: 15,
     margin: 5,
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
   drawerHeader: {
     height: 200,
     alignItems: 'center',
+    backgroundColor: '#0abde3',
 
 
   },
@@ -153,12 +155,13 @@ const styles = StyleSheet.create({
   icon:{
     width: 28,
     height: 28,
-    marginLeft: 5
+    marginLeft: 5,
+    color: '#0277bd'
   },
-  line: {
-    borderBottomColor: '#fafafa',
-    borderBottomWidth: 3,
-  },
+  // line: {
+  //   borderBottomColor: '#fefefe',
+  //   borderBottomWidth: 1,
+  // },
   menuItem:{
     flexDirection: 'row',
     alignItems: 'center',

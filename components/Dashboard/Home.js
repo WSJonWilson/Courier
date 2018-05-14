@@ -97,7 +97,7 @@ class Home extends Component {
               style={styles.Button}
               onPress={() => this.props.navigation.navigate('Note')}
               full>
-              <Text style={styles.text}>New Note</Text>
+              <Text style={styles.text2}>New Note</Text>
             </Button>
           </Card>
 </Container>
@@ -116,7 +116,7 @@ class Home extends Component {
               style={styles.Button}
               onPress={() => this.props.navigation.navigate('Chat')}
               full>
-              <Text style={styles.text}>New Message</Text>
+              <Text style={styles.text2}>New Message</Text>
             </Button>
           </Card>
 </Container>
@@ -166,6 +166,14 @@ const styles = StyleSheet.create({
 
   text: {
     color: '#fafafa',
+    fontSize: 14,
+    paddingTop: 10,
+    paddingBottom: 10,
+    alignItems: 'center'
+  },
+  
+  text2: {
+    color: '#263238',
     fontSize: 14,
     paddingTop: 10,
     paddingBottom: 10,

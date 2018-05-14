@@ -87,7 +87,8 @@ export const SignedIn = DrawerNavigator(
     drawerOpenRoute: 'DrawerOpen',
     drawerCloseRoute: 'DrawerClose',
     drawerToggleRoute: 'DrawerToggle',
-    gesturesEnabled: false,
+    gesturesEnabled: true,
+    
  });
  
  

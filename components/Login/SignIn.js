@@ -59,7 +59,7 @@ const styles= StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
       paddingVertical: 20,
-      backgroundColor: '#3867d6'
+      backgroundColor: '#263238'
   },
   input: {
       width: 300,

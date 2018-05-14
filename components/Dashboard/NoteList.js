@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
     text:{
-      color: '#57606f',
+      color: '#fafafa',
       fontSize: 16,
       marginTop: 70,
       alignItems: 'center',

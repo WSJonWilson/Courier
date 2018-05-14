@@ -55,8 +55,11 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
     <TouchableOpacity>
 
     <ListItem
-        item={item}
-        onPress={() => this.props.navigation.navigate("DeliveryDetails", { 
+      style={{ 
+        backgroundColor: '#263238'
+            }}
+          item={item}
+          onPress={() => this.props.navigation.navigate("DeliveryDetails", { 
           title: `${item.Title}`,
           firstname: `${item.FirstName}`,
           lastname: `${item.LastName}`,
@@ -150,7 +153,10 @@ this.props.fetchPackageDetails();
         hideModal={this.hideMyModal}        
      />}
 */}
-   <List style={{flex: 1,}}>
+   <List style={{
+     flex: 1,
+     backgroundColor: '#263238'
+          }}>
         <FlatList
           data={this.props.package.customer}
           ItemSeparatorComponent={this.renderSeparator}
@@ -188,7 +194,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   ListItem:{
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
+    backgroundColor: '#263238'
   },
   subtitle:{
     fontSize: 14,

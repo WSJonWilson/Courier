@@ -46,8 +46,8 @@ const TabNavigation = TabNavigator ({
   {
 
     tabBarOptions: {
-      activeTintColor: '#f1f2f6',
-      inactiveTintColor: 'black',
+      activeTintColor: '#0abde3',
+      inactiveTintColor: '#f1f2f6',
       labelStyle: {
         fontSize: 19,
         marginTop: 20,
@@ -56,7 +56,7 @@ const TabNavigation = TabNavigator ({
       },
       style: {
         height: 60,
-        backgroundColor: '#129fcb',
+        backgroundColor: '#455a64',
       },
     },
     tabBarComponent: TabBarBottom,
