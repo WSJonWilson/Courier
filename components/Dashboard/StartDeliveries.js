@@ -56,7 +56,7 @@ const TabNavigation = TabNavigator ({
       },
       style: {
         height: 60,
-        backgroundColor: '#455a64',
+        backgroundColor: '#263238',
       },
     },
     tabBarComponent: TabBarBottom,

@@ -26,7 +26,7 @@ export default ({ navigation }) => (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
         <Image style={styles.logo}
-               source={require('../../assets/images/avatar.png')}/>
+               source={require('../../assets/images/logo.png')}/>
       </View>
       <Text style={styles.logoText}>Courier & Transport Application</Text>
       <TextInput style={styles.input} 

@@ -46,14 +46,17 @@ export default class DeliveryDetails extends Component {
 
   async codeAddress(address) {
 
-    const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=`+`${address}`+`&key=AIzaSyAcyBKStwZ2oeVgqNn7GwrGu9g0EQtbDpI&callback`)
-    const gdata = res.json(address)
+    const res = await fetch('https://maps.googleapis.com/maps/api/geocode/json?key='+ AIzaSyAkDZYuC_Cg5Q3ln0e6kRdPtMfoFwNDvr8 +'&address='+`${address}`);
+    const gdata = res.json()
       .then((gdata) => {
-      console.warn(address);
-
         if (gdata.status === 'OK') {
-          var location = gdata.results[0].geometry.location;
-          console.warn(location);
+          console.warn(gdata);
+          return <MapView.Marker
+    coordinate={{
+      latitude: gdata.results[0].geometry.location.lat,
+      longitude: gdata.results[0].geometry.location.lng
+    }}
+    />
         }
          else 
         {
@@ -130,9 +133,21 @@ export default class DeliveryDetails extends Component {
           alignContent: 'stretch',
           height: 400
         }}>
-          <Card style={styles.card}>
+          <Card style={{
+            flex: 1,
+            backgroundColor: '#f6f6f6',
+            position: 'relative',
+            paddingBottom: 10,
+            marginBottom: 30,
+            height: 350,
+            top: 0,
+            left: 0,
+            right: 0
+          }}>
             <View style={{
-              paddingBottom: 30
+              paddingBottom: 30,
+              backgroundColor: '#263238',
+
             }}>
               <Text style={styles.text}>Full Name: {`${params.title} ${params.firstname} ${params.lastname} \n`}</Text>
               <Text style={styles.text}>Address: {`${params.address}`}
@@ -142,9 +157,7 @@ export default class DeliveryDetails extends Component {
               <Text style={styles.text}>Account Number: {`${params.accountNumber}`}</Text>
               <Text style={styles.text}>Email Sent: {`${params.emailSent}`}
               </Text>
-              <Text>
-                . . .
-              </Text>
+      
             </View>
             <View style={styles.buttonWrapper}>
               <View style={styles.buttonContainer}>
@@ -181,7 +194,7 @@ export default class DeliveryDetails extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f6f6',
+    backgroundColor: '#263238',
     justifyContent: 'space-between'
   },
 
@@ -197,22 +210,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
 
-  card: {
-    alignItems: 'stretch',
-    flex: 1,
-    flexGrow: 1,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: '#0984e3',
-    position: 'relative',
-    paddingBottom: 10,
-    marginBottom: 30,
-    height: 350,
-    top: 0,
-    left: 0,
-    right: 0
-  },
-
   DetailsButton: {
     backgroundColor: '#0984e3',
     color: '#fff',
@@ -226,7 +223,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 15,
-    marginBottom: 15
+    marginBottom: 15,
+    marginLeft: 10,
 
   },
   DetailsButton2: {
@@ -243,7 +241,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
     marginBottom: 15,
-    marginLeft: 20
+    marginLeft: 22
 
   },
 
@@ -274,6 +272,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     marginBottom: 5,
     padding: 10,
+    color: '#fff',
     textAlign: 'center'
   },
 
