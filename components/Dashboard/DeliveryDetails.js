@@ -46,7 +46,7 @@ export default class DeliveryDetails extends Component {
 
   async codeAddress(address) {
 
-    const res = await fetch('https://maps.googleapis.com/maps/api/geocode/json?key='+ AIzaSyAkDZYuC_Cg5Q3ln0e6kRdPtMfoFwNDvr8 +'&address='+`${address}`);
+    const res = await fetch('https://maps.googleapis.com/maps/api/geocode/json?key='+ 'AIzaSyAkDZYuC_Cg5Q3ln0e6kRdPtMfoFwNDvr8' +'&address='+`${address}`);
     const gdata = res.json()
       .then((gdata) => {
         if (gdata.status === 'OK') {
@@ -65,25 +65,13 @@ export default class DeliveryDetails extends Component {
       })
   }
 
-  //   Geocoder.init('AIzaSyAcyBKStwZ2oeVgqNn7GwrGu9g0EQtbDpI'); // use a valid
-  // API key   Geocoder.from(`${googleUrl}`+`${address}`)   .then(res =>
-  // res.json())   .then((data)=>{     this.setState({      location:
-  // json.results[0].geometry.location     });      console.warn(address);
-  // console.warn(location.lat);   });
 
   render() {
     const {params} = this.props.navigation.state;
     const address = params.address;
     console.warn(address);
-    //removed stringify code. check github for line
-    //Data received in address
-
-    // var geocoder = new google.maps.Geocoder(); var address =
-    // this.props.navigation.state.address; geocoder.geocode( { 'address': address},
-    // function(results, status) { if (status == google.maps.GeocoderStatus.OK) {
-    // var latitude = results[0].geometry.location.latitude;     var longitude =
-    // results[0].geometry.location.longitude;     console.warn(latitude);     } });
-
+  
+    
     return (
 
       <Container style={styles.container}>

@@ -24,33 +24,18 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
     const { navigation } = this.props;
 
     this.state = { 
-    //  isLoading: true,
-     /// isModalVisible: false,
       selectedItem: null,
       text: ''
     };
   };
 
- ///  onPressItem = (item) => { 
- ///   this.toggleModal (item);
- /// };
 
-//  hideMyModal = () => {
- //   this.setState({isModalVisible: false})
-//}
-  
-//toggleModal = (item) => this.setState({ isModalVisible: true, 
- // selectedItem: item })
-  
- // _keyExtractor = (item, index) => item.id;
 
- /* setModalVisible(visible) {
+  // //  // //  // //  // //  // //  //
+  // // // RENDER FUNCTIONS   // //  //
+  // //  // //  // //  // //  // //  //
 
-    this.setState({modalVisible: visible});
-    
-  } */
 
-  
   renderItem = ({item}) => (       
     <TouchableOpacity>
 
@@ -88,6 +73,11 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
     </TouchableOpacity> 
     );
 
+    renderData =() =>{
+      const customer = this.props.package.customer;
+        //Function for passing data through return
+        // https://codereview.stackexchange.com/questions/25858/json-lookup-by-key
+    }
 
   renderSeparator = () => {
     return (
@@ -117,7 +107,6 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
     return (
       <View
         style={{
-         // paddingVertical: 20,
           borderTopWidth: 1,
           borderColor: "#CED0CE"
         }}
@@ -131,6 +120,8 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
 this.props.fetchPackageDetails();
 
 }
+
+
 
   render(){
     const { navigation } = this.props
@@ -147,12 +138,6 @@ this.props.fetchPackageDetails();
   return(
 <Container>
 
-{/*<ModalDetails
-        modalVisible={this.state.isModalVisible} 
-        selectedItem={this.state.selectedItem}
-        hideModal={this.hideMyModal}        
-     />}
-*/}
    <List style={{
      flex: 1,
      backgroundColor: '#263238'
