@@ -32,6 +32,8 @@ const {width, height} = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 var geocoder;
 var location;
+const url = 'https://maps.googleapis.com/maps/api/geocode/json?key='
+const key = 'AIzaSyAkDZYuC_Cg5Q3ln0e6kRdPtMfoFwNDvr8'
 
 export default class DeliveryDetails extends Component {
 
@@ -46,7 +48,7 @@ export default class DeliveryDetails extends Component {
 
   async codeAddress(address) {
 
-    const res = await fetch('https://maps.googleapis.com/maps/api/geocode/json?key='+ 'AIzaSyAkDZYuC_Cg5Q3ln0e6kRdPtMfoFwNDvr8' +'&address='+`${address}`);
+    const res = await fetch( `${url}`+`${key}`+'&address='+`${address}`);
     const gdata = res.json()
       .then((gdata) => {
         if (gdata.status === 'OK') {

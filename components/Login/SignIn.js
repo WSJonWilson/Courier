@@ -76,7 +76,7 @@ const styles= StyleSheet.create({
     paddingBottom: 15,
 },
   buttonStyle:{
-    marginTop: 20,
+    marginTop: 15,
     borderRadius: 25,
     marginVertical: 10,
     paddingVertical: 13,
@@ -97,7 +97,8 @@ const styles= StyleSheet.create({
     color: '#ffff',
   },
   forgotPassword:{
-
+    marginTop: 5,
+  color: '#fafafa',
   }
 
   

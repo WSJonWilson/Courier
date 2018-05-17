@@ -34,7 +34,18 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
   // //  // //  // //  // //  // //  //
   // // // RENDER FUNCTIONS   // //  //
   // //  // //  // //  // //  // //  //
+    
+    async PackageData(data, x) {
+      data = this.props.package.package; 
 
+      for (var i=0, info=data.length; i<info; i++) {
+        if (data[i].AccountNumber == x) 
+        return data[i];
+      }
+      console.warn(data[i])
+    }
+    
+  
 
   renderItem = ({item}) => (       
     <TouchableOpacity>
@@ -44,16 +55,22 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
         backgroundColor: '#263238'
             }}
           item={item}
-          onPress={() => this.props.navigation.navigate("DeliveryDetails", { 
+          onPress={
+
+          //OnPress should go through all arrays, select the objects with same ID (AccountNumber)
+         // and return their parent objects, passing them through the navigation. 
+
+            () => this.props.navigation.navigate("DeliveryDetails", { 
           title: `${item.Title}`,
           firstname: `${item.FirstName}`,
           lastname: `${item.LastName}`,
           address: `${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`,
-          contact1: `${item.Tel1}`,
+          contact1: `${item.Tel1}` ,
           contact2: `${item.Tel2}` ,
           accountNumber: `${item.AccountNumber}`,
           emailSent: `${item.EmailSent}`,
-         })}
+         })
+        }
         title={     
                <View>     
                   <Text style={styles.title}>
@@ -73,11 +90,10 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
     </TouchableOpacity> 
     );
 
-    renderData =() =>{
-      const customer = this.props.package.customer;
+  
         //Function for passing data through return
         // https://codereview.stackexchange.com/questions/25858/json-lookup-by-key
-    }
+    
 
   renderSeparator = () => {
     return (
@@ -102,7 +118,7 @@ import {fetchPackageDetails} from '../redux/actions/packageActions';
 
 
   renderFooter = () => {
-    if (!this.state.loading) return null;
+    if (this.props.package.customer == null) return null;
 
     return (
       <View
@@ -126,11 +142,11 @@ this.props.fetchPackageDetails();
   render(){
     const { navigation } = this.props
 
-   if(this.state.isLoading){
+   if(this.props.package.customer == null){
      return(
     <View style={{flex: 1, padding: 20, justifyContent: 'center', alignContent: 'center'}}>
-      <ActivityIndicator/>
-    <Text style={styles.load}>Loading Customers...</Text>
+      <ActivityIndicator animating size="large"/>
+       <Text style={styles.load}>Loading Customers...</Text>
      </View>
    )
 }
@@ -144,6 +160,7 @@ this.props.fetchPackageDetails();
           }}>
         <FlatList
           data={this.props.package.customer}
+          //this.props.package.multiplearrays
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
           ListFooterComponent={this.renderFooter}
@@ -232,6 +249,7 @@ const styles = StyleSheet.create({
  load:{
    color: '#0984e3',
    textAlign: 'center',
+   fontSize: 18,
    paddingTop: 5,
  },
 
