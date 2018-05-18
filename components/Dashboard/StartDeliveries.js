@@ -4,7 +4,7 @@ import {Card, FormLabel, FormInput} from 'react-native-elements';
 import { Icon, Button, Container, Header, Content, Left, Right } from 'native-base';
 import CustomHeader from './CustomHeader';
 import DeliveryComplete from '../Dashboard/DeliveryComplete';
-import DeliveryDefault from '../Dashboard/DeliveryDefault';
+import Home from '../Dashboard/Home';
 import DeliveryHold from '../Dashboard/DeliveryHold';
 import {TabNavigator, TabBarBottom} from 'react-navigation';
 
@@ -18,7 +18,7 @@ class StartDeliveries extends React.Component {
 <Header>
         <CustomHeader style={styles.CustomHeader} title="Start Deliveries" drawerOpen={() => this.props.navigation.navigate('DrawerOpen')} />
 </Header>
-<DeliveryDefault />
+<Home/>
 <DeliveryComplete/>
 <DeliveryHold />
 
@@ -34,7 +34,7 @@ class StartDeliveries extends React.Component {
 const TabNavigation = TabNavigator ({
 
   Default:{
-     screen: DeliveryDefault
+     screen: Home
    },
    Hold:{ 
      screen: DeliveryHold,

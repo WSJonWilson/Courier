@@ -39,7 +39,7 @@ export default class DrawerContainer extends React.Component {
     <View style={styles.line}>
     </View>
 
-   <View style={styles.menuItem}>
+   {/* <View style={styles.menuItem}>
    <Icon name="payment" 
                   size={20}
                   style={styles.icon}/>
@@ -50,9 +50,9 @@ export default class DrawerContainer extends React.Component {
       </Text>
   </View>
       <View style={styles.line}>
-        </View>
+        </View> */}
 
-     <View style={styles.menuItem}>
+     {/* <View style={styles.menuItem}>
      <Icon name="card-giftcard" 
                  size={20} 
                  style={styles.icon} />
@@ -64,9 +64,9 @@ export default class DrawerContainer extends React.Component {
       </View>
 
       <View style={styles.line}>
-      </View>
+      </View> */}
 
-      <View style={styles.menuItem}>
+      {/* <View style={styles.menuItem}>
 <Icon name="place" 
                 size={20}
                 style={styles.icon}/>
@@ -87,9 +87,18 @@ export default class DrawerContainer extends React.Component {
         style={styles.drawerItem}>
 Customer Details      </Text>
       </View>
-      
-      <View style={styles.line}>
-      </View>
+      */}
+
+  <View style={styles.menuItem}>
+ <Icon name="check" 
+              size={20} 
+              style={styles.icon}/>
+      <Text
+        onPress={() => navigation.navigate('Test')}
+        style={styles.drawerItem}>
+        Experiment
+      </Text>
+</View> 
 
  <View style={styles.menuItem}>
  <Icon name="settings" 

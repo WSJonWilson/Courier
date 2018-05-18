@@ -6,15 +6,12 @@ import Note from '../Dashboard/Note';
 import Chat from '../Dashboard/Chat';
 import Settings from '../Dashboard/Settings';
 import StartDeliveries from '../Dashboard/StartDeliveries';
-import ManagePayments from '../Dashboard/ManagePayments';
 import DrawerContainer from '../Navigation/DrawContainer';
-import GMap from '../Dashboard/Map';
+import Test from '../Dashboard/Test';
 import CustomerDetails from '../Dashboard/CustomerDetails';
 import DeliveryDetails from '../Dashboard/DeliveryDetails';
 import DeliveryComplete from '../Dashboard/DeliveryComplete';
-import DeliveryDefault from '../Dashboard/DeliveryDefault';
 import DeliveryHold from '../Dashboard/DeliveryHold';
-import ModalDetails from '../Dashboard/Modal';
 import PackageDetails from '../Dashboard/PackageDetails';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -40,9 +37,6 @@ export const SignedOut = StackNavigator({
     DeliveryDetails:{
       screen: DeliveryDetails
     },
-    ModalDetails:{
-      screen:ModalDetails
-    },
     PackageDetails:{
       screen: PackageDetails
     },
@@ -59,21 +53,18 @@ export const SignedOut = StackNavigator({
 export const SignedIn = DrawerNavigator(
     {
       Home: {
-        screen: Home,
+        screen: StartDeliveries
       },
 
       Settings: {
         screen: Settings,
 
       },
-      StartDeliveries: { 
-        screen: StartDeliveries
+      Note:{
+        screen: Note
       },
-      ManagePayments:{
-        screen: ManagePayments,
-      },
-      GMap:{
-        screen: GMap
+      Test:{
+        screen: Test
       },
       CustomerDetails:{
         screen: CustomerDetails,
@@ -95,8 +86,8 @@ export const SignedIn = DrawerNavigator(
  
  export const TabNavigation = TabNavigator ({
 
-  DeliveryDefault:{
-     screen: DeliveryDefault
+  Home:{
+     screen: Home
    },
    DeliveryHold:{ 
      screen: DeliveryHold,

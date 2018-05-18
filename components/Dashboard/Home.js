@@ -1,228 +1,262 @@
-import React, {Component} from "react";
-import {
-  ScrollView,
-  Text,
-  Linking,
-  View,
-  StyleSheet,
-  Image,
-  Dimensions
-} from "react-native";
-import {
-  Button,
-  Card,
-  CardItem,
-  Container,
-  Header,
-  Icon,
-  Content,
-  Left,
-  Right
-} from 'native-base';
-import LinearGradient from 'react-native-linear-gradient';
+import React, { Component } from 'react';
+import { Card, FlatList, FlatListProperties, ActivityIndicator, Linking, TouchableOpacity, TouchableHighlight, ScrollView, StyleSheet,  View, Text, TextInput, Alert} from 'react-native';
+import { List, ListItem } from "react-native-elements";
+import Modal from 'react-native-modal';
+import { Button, Container, Header, Content, Left, Right } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SearchBar } from 'react-native-elements';
 import CustomHeader from './CustomHeader';
-import NoteList from '../Dashboard/NoteList';
-import ChatList from '../Dashboard/ChatList';
-import Chat from '../Dashboard/Chat';
-import Note from '../Dashboard/Note';
+import Chat from './Chat';
+import Note from './Note';
+import DeliveryDetails from  './DeliveryDetails'
+import ModalDetails from './Modal';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux';
+import {fetchPackageDetails} from '../redux/actions/packageActions';
 
-class Home extends Component {
-  static navigationOptions = ({navigation}) => ({
-    title: "Home", headerLeft: <Icon
-      name="menu"
-      size={20}
-      style={{
-      paddingLeft: 10
-    }}
-      onPress={() => navigation.navigate('DrawerOpen')}/>,
 
-    drawerLabel: 'Home'
-  })
 
-  render() {
+ class Home extends Component {
+  
+
+  constructor(props){    
+    super(props);
+    const { navigation } = this.props;
+
+    this.state = { 
+      selectedItem: null,
+      text: ''
+    };
+  };
+
+
+
+  // //  // //  // //  // //  // //  //
+  // // // RENDER FUNCTIONS   // //  //
+  // //  // //  // //  // //  // //  //
+    
+    async PackageData(data, x) {
+      data = this.props.package.package; 
+
+      for (var i=0, info=data.length; i<info; i++) {
+        if (data[i].AccountNumber == x) 
+        return data[i];
+      }
+      console.warn(data[i])
+    }
+    
+  
+
+  renderItem = ({item}) => (       
+    <TouchableOpacity>
+
+    <ListItem
+      style={{ 
+        backgroundColor: '#263238'
+            }}
+          item={item}
+          onPress={
+
+          //OnPress should go through all arrays, select the objects with same ID (AccountNumber)
+         // and return their parent objects, passing them through the navigation. 
+
+            () => this.props.navigation.navigate("DeliveryDetails", { 
+          title: `${item.Title}`,
+          firstname: `${item.FirstName}`,
+          lastname: `${item.LastName}`,
+          address: `${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`,
+          contact1: `${item.Tel1}` ,
+          contact2: `${item.Tel2}` ,
+          accountNumber: `${item.AccountNumber}`,
+          emailSent: `${item.EmailSent}`,
+         })
+        }
+        title={     
+               <View>     
+                  <Text style={styles.title}>
+                  {`${item.Title} ${item.FirstName} ${item.LastName}`} - #{`${item.AccountNumber}`} 
+                  </Text> 
+               </View>
+              }
+        subtitle={
+              <View style={styles.subtitle}>
+                  <Text>{`${item.Tel1}`} / {`${item.Tel2}`}</Text>
+                  <Text>
+                        {`${item.Primary_DeliveryStreet1}, ${item.Primary_DeliveryStreet2}, ${item.Primary_DeliveryCity}`}
+                 </Text>
+              </View>
+                 }    
+    />     
+    </TouchableOpacity> 
+    );
+
+  
+        //Function for passing data through return
+        // https://codereview.stackexchange.com/questions/25858/json-lookup-by-key
+    
+
+  renderSeparator = () => {
     return (
+      <View
+        style={{
+          height: 1,
+          width: "86%",
+          backgroundColor: "#CED0CE",
+          marginLeft: "14%"
+        }}
+      />
+    );
+};
 
-      <LinearGradient colors={['#37474f', '#37474f']} style={styles.container}>
-        <CustomHeader
-          title="Home"
-          drawerOpen={() => this.props.navigation.navigate('DrawerOpen')}/>
-        <Content contentContainerStyle={{
-          flex: 1
-        }}>
+renderHeader = () => {
+    return <SearchBar 
+             noIcon
+             placeholder="Type Here..." lightTheme
+             clearIcon = {false}
+             searchIcon = {false}
+             onChangeText={(text) => this.SearchFilterFunction(text)}
+             value={this.state.text}
+             underlineColorAndroid='transparent'
+              />;
+  };
 
-          {/* *********** COUNTER HEADER ***********/}
 
-          <View style={styles.viewContainer}>
+  renderFooter = () => {
+    if (this.props.package.customer == null) return null;
 
-            <View style={styles.cardContainer}>
-              <View style={styles.boxContainer}>
-                <Text style={styles.counter}>
-                  0
-                </Text>
-                <Text style={styles.text}>Packages Left</Text>
-              </View>
+    return (
+      <View
+        style={{
+          borderTopWidth: 1,
+          borderColor: "#CED0CE"
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
+  };
 
-              <View style={styles.boxContainer}>
-                <Text style={styles.counter}>
-                  0
-                </Text>
-                <Text style={styles.text}>Customers Left</Text>
-              </View>
-
-              <View style={styles.boxContainer}>
-                <Text style={styles.counter}>
-                  $0.00
-                </Text>
-                <Text style={styles.text}>
-                  Cash Collected
-                </Text>
-              </View>
-            </View>
-          </View>
-<Container style={{backgroundColor: '#000',
-                     alignItems: 'stretch',
-                     alignContent: 'center',
-                     justifyContent: 'center',
-                  }}>
-          <Card style={styles.notesContainer}>
-            <View>
-              <Text style={styles.heading}>Notes</Text>
-            </View>
-            <View style={styles.line}></View>
-            <ScrollView>
-              <NoteList/>
-            </ScrollView>
-
-            <Button
-              style={styles.Button}
-              onPress={() => this.props.navigation.navigate('Note')}
-              full>
-              <Text style={styles.text2}>New Note</Text>
-            </Button>
-          </Card>
-</Container>
-<Container style={{backgroundColor: '#000'}}>
-
-          <Card style={styles.chatContainer}>
-            <View>
-              <Text style={styles.heading}>Chat</Text>
-            </View>
-            <View style={styles.line}></View>
-            <ScrollView>
-              <ChatList/>
-            </ScrollView>
-
-            <Button
-              style={styles.Button}
-              onPress={() => this.props.navigation.navigate('Chat')}
-              full>
-              <Text style={styles.text2}>New Message</Text>
-            </Button>
-          </Card>
-</Container>
-    </Content>
-      </LinearGradient>
-
-    )
-  }
+  componentDidMount(){
+this.props.fetchPackageDetails();
 
 }
 
-export default Home;
+
+
+  render(){
+    const { navigation } = this.props
+
+   if(this.props.package.customer == null){
+     return(
+    <View style={{flex: 1, padding: 20, justifyContent: 'center', alignContent: 'center'}}>
+      <ActivityIndicator animating size="large"/>
+       <Text style={styles.load}>Loading Customers...</Text>
+     </View>
+   )
+}
+
+  return(
+<Container>
+
+   <List style={{
+     flex: 1,
+     backgroundColor: '#263238'
+          }}>
+        <FlatList
+          data={this.props.package.customer}
+          //this.props.package.multiplearrays
+          ItemSeparatorComponent={this.renderSeparator}
+          ListHeaderComponent={this.renderHeader}
+          ListFooterComponent={this.renderFooter}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.AccountNumber}
+      />
+      </List>
+  
+</Container>
+  );
+}
+
+//https://codeburst.io/integrating-react-native-apps-with-back-end-code-using-fetch-api-8aeb83dfb428
+}
+
+const mapStateToProps = state => ({
+  package: state.package.items
+})
+export default connect(mapStateToProps, {fetchPackageDetails})(Home);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000'
-  },
-  viewContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    backgroundColor: '#000',
-  },
 
-  icon: {
-    width: 24,
-    height: 24
-  },
-
-  boxContainer: {
-    width: Dimensions
-      .get('window')
-      .width / 3 - 5, //Review Dimensions Component
-    margin: 3,
+  DetailsButton:{
+    backgroundColor: '#0984e3',
+    color: '#fff',
+    marginLeft: 75,
+    marginRight: 75,
+    borderRadius: 10,
+    padding: 3,
+    borderColor: '#fff',
+    borderWidth: 2,
+    justifyContent: 'center',
     alignItems: 'center'
   },
-
-  cardContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    height: 130,
-    paddingTop: 22,
-    marginTop: 0,
+  ListItem:{
+    borderBottomWidth: 0,
     backgroundColor: '#263238'
   },
-
-  text: {
-    color: '#fafafa',
+  subtitle:{
     fontSize: 14,
-    paddingTop: 10,
-    paddingBottom: 10,
-    alignItems: 'center'
+    fontWeight: "100",
   },
-  
-  text2: {
-    color: '#263238',
-    fontSize: 14,
-    paddingTop: 10,
-    paddingBottom: 10,
-    alignItems: 'center'
-  },
+  title:{
+    textAlign: 'left',
+    color: '#000',
+    fontSize: 17,
 
-  counter: {
-    alignItems: 'center',
+  },
+  Modal:{
+    flex:1, 
     justifyContent: 'center',
-    textAlign: 'center',
-    fontSize: 26,
-    color: '#fff'
-  },
+     alignItems: 'center'
 
+      
+   },
+   ModalButton:{
+      backgroundColor: '#0984e3',
+      color: '#fff',
+      marginLeft: 75,
+    marginRight: 75,
+    borderRadius: 10,
 
-
-  heading: {
-    fontSize: 20,
-    fontWeight: '300',
-    color: '#0984e3',
-    textAlign: 'center'
-  },
-  notesContainer: {
-    flex: 1,
-    alignItems: 'stretch',
-    alignContent: 'center',
+   },
+   ModalInsideView:{
+ 
     justifyContent: 'center',
-    backgroundColor: '#263238',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
-    elevation: 0
+    alignItems: 'center', 
+    backgroundColor : "#fefefe", 
+    height: 400 ,
+    width: '100%',
+    borderRadius:10,
+    borderWidth: 1,
+    borderColor: '#00BCD4'
+   
   },
-  chatContainer: {
-    backgroundColor: '#263238',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginTop: 13,
-    elevation: 0
-  },
-  Button: {
-    marginTop: 5,
-    marginLeft: 100,
-    marginRight: 100,
-    color: '#0984e3',
-    backgroundColor: '#cfd8dc',
-  }
 
-});
+   text: {
+   fontSize: 16, 
+   fontWeight: '300',
+  marginBottom: 5, 
+  color: "#fff",
+  padding: 10,
+  textAlign: 'center'
+ },
+
+ load:{
+   color: '#0984e3',
+   textAlign: 'center',
+   fontSize: 18,
+   paddingTop: 5,
+ },
+
+
+})
+

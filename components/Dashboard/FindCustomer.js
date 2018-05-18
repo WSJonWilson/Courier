@@ -19,7 +19,7 @@ import {
   Right
 } from 'native-base';
 import CustomHeader from './CustomHeader';
-import DeliveryDefault from './DeliveryDefault';
+import Home from './Home';
 import PackageDetails from './PackageDetails';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';

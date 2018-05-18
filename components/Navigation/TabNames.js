@@ -1,5 +1,5 @@
-const DeliveryDefault = "Default";
+const Home = "Home";
 const DeliveryHold = "Hold";
 const DeliveryComplete = "Complete";
 
-export {DeliveryComplete, DeliveryDefault, DeliveryHold};
+export {DeliveryComplete, Home, DeliveryHold};

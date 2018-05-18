@@ -19,7 +19,6 @@ import {
   Right
 } from 'native-base';
 import CustomHeader from './CustomHeader';
-import DeliveryDefault from './DeliveryDefault';
 import PackageDetails from './PackageDetails';
 
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
